@@ -1,0 +1,40 @@
+KULCSSZOIG TARTO BEKERES, TOBB LEALLASI FELTETEL          (pszeudokod, nem C#)
+=============================================================================
+Felismeres: "folyamatosan kerje be", "amig STOP / vegeztem / kovetkezo",
+            "legfeljebb 10 ... de maximum 1000 ...", "uj ... kezdese"
+
+VAZ 1: vegtelen ciklus + kilepes
+   szamlalok = 0 ...
+   ciklus (mindig):
+      be = beker (Trim, ToUpper / ToLower a kulcsszo vizsgalat elott)
+      ha (be == "STOP")  kilep
+      ... feldolgozas ...
+VAZ 2: a feltetel a ciklusfejben (az elso bekeres a ciklus ELOTT)
+   be = beker
+   amig (be != "STOP"):   ... feldolgozas ...;   be = beker
+TOBB LEALLASI FELTETEL: kapacitas VAGY kulcsszo
+   amig (db < max ES be != "STOP"):  ...
+   - kilepeskor vizsgald meg, MELYIK feltetel miatt allt le (ha szamit)
+
+EGYSEG-VALTAS ("uj varosresz", "kovetkezo nap", "uj doboz"):
+   Az aktualis egyseg allapota: darab, osszes ertek / ido (kapacitashoz).
+   Uj egyseget nyitsz, ha  (az aktualis megtelt)  VAGY  (kulcsszo: kovetkezo):
+      egyseg_sorszam = egyseg_sorszam + 1
+      egyseg valtozoi nullazva: darab = 0, ertek = 0
+   Mielott felveszel egy elemet: ELFER-E az aktualis egysegbe?
+      ha nem fer el: uj egyseg, UTANA veszed fel (vagy elutasitod: feladat)
+   Kiiras elott: a feladat kerheti: "mennyi szabad hely / kapacitas van meg"
+
+MEGKEZDETT EGYSEG: az utolso, nem teljesen megtelt egyseg is szamit (db >= 1)
+VEGOSSZEG: tetelenkent ar a tabla szerint (j arkalk), osszeg valtozoba gyujtve
+HH:MM: ora = perc / 60 (egesz osztas), perc = perc % 60; kiiras 2 jegyen
+   (j kiir: {ora:D2}:{perc:D2})
+SZAMLALOK: db, osszeg, egysegek szama - mindegyik helyen nullazodik?
+
+Kerdezd meg magad:
+  - a kulcsszo kis/nagybetu? szokoz a vegen? (Trim, ToUpper)
+  - a ciklus vegen az utolso (nem lezart) egyseg is be van-e szamolva?
+  - mi tortenik, ha az elso bekeres mar a kulcsszo? (nulla elem)
+  - ket kulcsszo van ("STOP" es "kovetkezo")? melyik mit csinal?
+Forras: 05_Ciklus 21., 24. dia (kulcsszoig: 0-ig szorzat, continue);
+        Feladatgyujtemeny 4. fejezet;  ZH1 2023/24 2, 2024/25 2, 2025/26 2.

@@ -1,0 +1,66 @@
+OSZTALY, STRUCT, ENUM, ERTEK vs REFERENCIA                          [ZH1+2]
+=============================================================================
+  Osztaly (class) = rekord: mezok (kulonbozo tipusuak lehetnek).
+    class Termek
+    {
+        public string nev;
+        public int ar = 0;               // kezdoertek is adhato
+        public bool raktaron;
+        public DateTime lejarat;
+    }
+  Hasznalat: deklaral + new (memoriafoglalas) + mezok a . operatorral
+    Termek t = new Termek();
+    t.nev = "Alma";
+    t.ar = 300;
+    t.raktaron = true;
+    t.lejarat = new DateTime(2025, 1, 31);
+    Termek u = new Termek() { nev = "Korte", ar = 450 };   // inicializalo
+    Console.WriteLine($"{t.nev}: {t.ar} Ft");
+  Lista / tomb objektumokbol:
+    Termek t = new Termek();
+    Termek u = new Termek();
+    List<Termek> lista = new List<Termek>();
+    lista.Add(t);
+    lista.Add(u);
+    foreach (Termek x in lista) x.ar = x.ar + 10;     // a MEZO modosul
+    Termek[] ts = new Termek[3];                       // elemei null!
+    ts[0] = new Termek();                        // minden elemet new-zni kell
+  Konstruktor (ha irsz, a new Osztaly() parameter nelkul mar nem letezik):
+    class Pont
+    {
+        public int x;
+        public int y;
+        public Pont(int x, int y) { this.x = x; this.y = y; }
+    }
+
+    Pont p = new Pont(3, 4);
+
+  ERTEK vs REFERENCIA
+  class, tomb, string, lista = REFERENCIA: az ertekadas a hivatkozast masolja.
+    Termek a1 = new Termek();
+    a1.ar = 100;
+    Termek a2 = a1;           // UGYANARRA az objektumra mutat
+    a2.ar = 200;              // a1.ar is 200 lett!
+    Termek a3 = null;         // a3.ar -> NullReferenceException
+  struct, int, double, bool, char = ERTEK: az ertekadas masol.
+    struct Pt { public int x; public int y; }
+
+    Pt s1;
+    s1.x = 1;
+    s1.y = 2;
+    Pt s2 = s1;
+    s2.x = 9;                 // s1.x marad 1
+  foreach: objektumnal a mezo modosithato, ertektipusnal (int) az elem nem.
+  Parameterkent: ertektipus masolodik; referencia kozos (j fuggveny).
+
+  ENUM (felsorolas): nevesitett egesz konstansok, alapertelmezett mogotte int
+    enum Napok { Het, Kedd, Sze, Csut, Pen, Szom, Vas }       // 0, 1, 2, ...
+    enum Szint : byte { Kezdo = 1, Halado = 5, Profi }          // Profi = 6
+
+    Napok nap = Napok.Kedd;
+    if (nap == Napok.Vas) Console.WriteLine("vasarnap");
+    int sorszam = (int)nap;                      // 1
+    Napok vissza = (Napok)3;                     // Csut
+    foreach (Napok n in Enum.GetValues(typeof(Napok))) Console.WriteLine(n);
+  Szovegbol (kis/nagybetu szamit!):  Napok k = Enum.Parse<Napok>("Sze");
+  switch enummal: case Napok.Het: ...; break;   (j switch)

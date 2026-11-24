@@ -1,0 +1,43 @@
+STRING ES CHAR                                                      [ZH1+2*]
+=============================================================================
+  * ZH1-ben Contains / IndexOf / StartsWith ... gyanus (algoritmus-jellegu):
+  ha nem vagy biztos, ciklussal oldd meg. Trim / ToLower / ToUpper /
+  Length / Substring / Split rendben van.
+    string s = "  Hello Vilag ";
+    int h = s.Length;                      // karakterek szama
+    char c = s[2];                         // 'H' (index 0-tol)
+    string t = s.Trim();                   // szeleken a szokoz le
+    string kis = s.ToLower();
+    string nagy = s.ToUpper();
+    string resz = t.Substring(0, 5);       // "Hello" (kezdo index, hossz)
+    string vege = t.Substring(6);          // "Vilag" (a vegeig)
+    string cs = t.Replace("Hello", "Szia");
+    string[] szavak = t.Split(' ');        // "Hello", "Vilag"
+    string[] mezok = "a;b;c".Split(';');   // CSV sor
+    bool eleje = t.StartsWith("He");       // ZH1: ciklussal inkabb
+    bool benne = t.Contains("lo");         // ZH1: ciklussal inkabb
+    int hely = t.IndexOf('V');             // -1 ha nincs; ZH1: ciklus inkabb
+    string ures = string.Empty;            // ""
+    string ossz = "ab" + "cd" + 5;         // abcd5
+    string x2 = $"{h} betu";
+  Osszehasonlitas: == / != a TARTALMAT hasonlitja, de kis/nagybetu KULONBOZIK:
+    string a = "Leves";
+    bool egyenlo = a.Trim().ToLower() == "leves";   // kis/nagybetu fuggetlen
+  Sorrend (abc): a.CompareTo(b) < 0 -> a van elobb. A Sort() is igy rendez.
+  Bejaras karakterenkent:
+    string t2 = "alma";
+    foreach (char ch in t2) Console.Write(ch + ".");
+    for (int i = 0; i < t2.Length; i++) Console.Write(t2[i]);
+  char:  char.IsDigit(ch)  char.IsLetter(ch)  char.IsUpper(ch)
+  char.ToUpper(ch)  char.ToLower(ch)
+    int szj = '7' - '0';                   // 7 (karakterbol szamjegy)
+    char kov = (char)('a' + 1);            // 'b'
+  A string valtozhatatlan: s.ToUpper() UJ stringet ad, s nem valtozik:
+    string u = "alma";
+    u = u.ToUpper();
+  Sok osszefuzes ciklusban: StringBuilder (using System.Text;)
+    StringBuilder sb = new StringBuilder();
+    sb.Append("ab");
+    sb.Append("cd");
+    string eredmeny = sb.ToString();
+  String = referencia, de ertekkent viselkedik (nem modosithato helyben).

@@ -1,0 +1,37 @@
+RANDOM                                                              [ZH1+2]
+=============================================================================
+  EGYETLEN peldany, a program elejen (ciklusban ne legyen new Random()!):
+    Random rnd = new Random();
+  Egesz:
+    int a = rnd.Next(100);            // [0;100)  -> 0..99
+    int b = rnd.Next(5, 11);          // 5..10    (felso hatar KIZARO!)
+    int c = rnd.Next(-20, 20);        // -20..19
+  Zart [x;y] egesz:   rnd.Next(x, y + 1)
+  Valos [0;1):        rnd.NextDouble()
+  Valos [x;y):        rnd.NextDouble() * (y - x) + x
+    double v = rnd.NextDouble() * (75.347 - (-30.4)) + (-30.4);
+
+  TIZEDESJEGY PONTOSSAG: egeszben generalj, utana oszd 10.0 / 100.0-val
+    double egy = rnd.Next(500, 1001) / 10.0;     // [50,0 ; 100,0], 1 tizedes
+    double ketto = rnd.Next(0, 750) / 100.0;     // [0 ; 7,5), 2 tizedes
+  (az osztas legyen 10.0 / 100.0, ne egesz: az csonkolna)
+
+  Paros szam [x;y]-bol (x, y paros): generalj [x/2;y/2]-bol, szorozd 2-vel
+    int par = rnd.Next(5, 28) * 2;               // paros: 10..54
+  Oszthato n-nel: ugyanigy, n-nel szorozva.  Paratlan: paros + 1.
+  Veletlen index / elem:
+    int[] t = new int[10];
+    int idx = rnd.Next(t.Length);                // 0..Length-1
+    t[idx] = t[idx] + rnd.Next(1, 9);
+  Ket intervallum uniojabol ([10;20) vagy [30;40)): elobb sorsolj agat
+    double u;
+    if (rnd.Next(2) == 0) u = 10 + rnd.NextDouble() * 10;
+    else u = 30 + rnd.NextDouble() * 10;
+  Valoszinuseg (pl. 10% esely):  rnd.NextDouble() < 0.1
+  Tomb feltoltese:
+    int[] t = new int[10];
+    for (int i = 0; i < t.Length; i++) t[i] = rnd.Next(1, 7);
+  Seed: new Random(30) -> mindig ugyanaz a sorozat (teszteleshez jo).
+  Seed nelkul a gep ora hatarozza meg; ket peldany egymas utan azonos
+  sorozatot adhat -> ezert csak 1 peldany.
+  Kerdezd meg: zart vagy nyilt a felso hatar? egesz vagy valos? hany tizedes?

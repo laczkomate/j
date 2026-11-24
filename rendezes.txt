@@ -1,0 +1,32 @@
+RENDEZES                                                 (pszeudokod, nem C#)
+=============================================================================
+BEEPITETT (csak ZH2, lista):          lista.Sort();     lista.Reverse();
+   - lambda nelkul. Szamokra / szovegre (abc) novekvo.
+   - csokkeno sorrend: Sort() utan Reverse()
+   - objektum-lista mezo szerinti rendezese beepitettel nem cel (lambda
+     kellene): ott kezi rendezes vagy mas megoldas
+   - ZH1-ben beepitett rendezes (Array.Sort is) nem szamit biztonsagosnak
+
+KEZI RENDEZES (novekvo), ket egyszeru valtozat:
+
+   1) MINIMUM-KIVALASZTASOS
+      ciklus i = 0 .. n-2:
+         m = i
+         ciklus j = i+1 .. n-1:   ha (elem[j] < elem[m])  m = j
+         ha (m != i)  csere(elem[i], elem[m])
+
+   2) EGYSZERU CSERES
+      ciklus i = 0 .. n-2:
+         ciklus j = i+1 .. n-1:  ha (elem[i] > elem[j]) csere(elem[i],elem[j])
+
+   CSERE (segedvaltozoval):   seged = a;   a = b;   b = seged
+   CSOKKENO: az osszehasonlitas iranya fordul (< helyett >)
+   OBJEKTUM-TOMB: az osszehasonlitas a mezon (elem[j].ar < elem[m].ar);
+      a csere a teljes objektumokat cserelje (nem csak a mezot)
+   MASODIK TOMB MEGORZESE: ha kell az eredeti sorrend is, rendezes elott
+      masold le a tombot (j tomb: valodi masolat)
+
+Kerdezd meg magad:
+  - a kulso ciklus hatara n-2 vagy n-1? (az utolso elem a helyen marad)
+  - egyforma elemek: stabilitas szamit-e? (a feladat altalaban nem keri)
+  - melyik tipusra rendezek: szam, szoveg, datum?

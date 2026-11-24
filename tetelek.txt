@@ -1,0 +1,42 @@
+PROGRAMOZASI TETELEK - FELISMERO TABLA            (a kartyak PSZEUDOKODOK)
+=============================================================================
+Feladatszoveg kulcsszava                         -> tetel           kartya
+-----------------------------------------------------------------------------
+"osszesen", "osszege", "mennyi ... osszesen"     -> osszegzes       osszegzes
+"hany db", "hany ... van", "megszamolja"         -> megszamolas     osszegzes
+"atlag", "atlagosan"                             -> osszeg + db     osszegzes
+"van-e (olyan)", "letezik-e", "talalhato-e"      -> eldontes        kereses
+"minden", "mindegyik", "mind"                    -> eldontes (mind) kereses
+"melyik", "hanyadik", "hol", "keresse meg"       -> lin. kereses    kereses
+"legnagyobb / legkisebb / legdragabb /
+ legolcsobb / legalacsonyabb / legtobb /
+ elso / utolso elofordulas"                      -> max / min       maximum
+"gyujtse ki", "valogassa ki", "listaba"         -> kivalogatas     kivalogatas
+"mindegyiket csak egyszer", "kulonbozo"          -> egyedi          egyedi
+"rendezve", "hatulrol", "sorba"                  -> rendezes        rendezes
+"...-nkent": kategoriankent, varosonkent,
+ gyartonkent, emeletenkent, csoportonkent        -> csoport         csoport
+"ugyanabban az idopontban", "utkozes",
+ "barmely ket ..."                               -> paros osszeh.   parosites
+"amig", "STOP", "vegeztem", "kovetkezo",
+ "folyamatosan kerje be"                         -> kulcsszoig      kulcsszo
+"torolje a listabol"                             -> keres + torles  torles
+"kedvezmeny", "sav", "megkezdett", "ar"          -> szelekcio       arkalk
+
+OSSZETETT FELADAT = TETELEK KOMBINACIOJA
+  felteteles atlag         = felteteles osszegzes + megszamolas
+                             (UGYANAZ a feltetel mindkettonel!)
+  csoportonkenti maximum   = csoport + (felteteles) max-kivalasztas
+  "legolcsobb ..., ha van" = felteteles min + "nincs talalat" eset
+  kategoriankent a legolcsobb negyen-gombas termek
+                           = egyedi + csoport + felteteles min
+  "melyik tobb a ket csoport kozul"
+                           = csoportonkent szelsoertek KULON valtozokba,
+                             UTANA a ket ertek osszehasonlitasa
+  "van-e olyan csoport, ahol minden ..."
+                           = csoportonkent mind-e, majd eldontes a csoportokon
+  "hany csoport ..."       = csoportonkent feltetel + megszamolas
+
+MINDEN FELADATHOZ (j gyakorlas): 4 kerdes - bemenet, adatszerkezet, tetelek,
+kimenet.
+MINDEN TETELNEL probald ki: ures | egy elem | nincs talalat | hatarertek.

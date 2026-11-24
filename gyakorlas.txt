@@ -1,0 +1,32 @@
+HOGYAN GYAKOROLJ A KARTYAKKAL
+=============================================================================
+A ZH-n NINCS kartya. Itt a kartya a vegso eszkoz, nem az elso.
+
+1) KODOLAS ELOTT - a 4 KERDES (irj le egy-egy sort):
+     a) Mik a bemenetek?                      (honnan jon, milyen tipus)
+     b) Milyen adatszerkezet kell?      (valtozo / tomb / lista / osztaly)
+     c) Melyik programozasi tetelek vannak?   (j tetelek: felismero tabla)
+     d) Mi a kimenet, pontosan milyen formaban?  (minta a feladatban!)
+
+2) IRD MEG FEJBOL. Futtasd. Probald ki szelso esetekkel:
+     ures / egy elem / nincs talalat / hatarertek / hibas bevitel.
+
+3) Hibas? Eloszor kerdezd meg magad: j ellenorzo, j hibauzenet.
+
+4) CSAK ha elakadtal a szintaxison: j <tema>.
+   A tetel-kartyakon lepesek vannak, nem kod. A C# atirast ne masold:
+   ird meg, es futtasd.
+
+5) Vezess "mit kellett megnezni" listat (papiron / jegyzettombben).
+   Ami a listan van, azt kell megtanulnod: a ZH-n pont azt nem nezheted meg.
+
+6) Idore dolgozz (a ZH idejet a kiirasbol nezd). Kesobb mindig:
+     - IntelliCode KIKAPCSOLVA (Tools > Options)
+     - nincs orai anyag, nincs internet, nincs kartya
+     - egy teljes ZH-szeru feladatsor egyben (3 feladat), utana ertekeles
+
+HALADAS (konnyutol nehezig):
+     1. egy tetel egyedul   2. ket tetel egyutt   3. teljes ZH-szeru feladat
+
+FORRASOK: orai diak 01..10, Feladatgyujtemeny (2. szelekcio, 3. random,
+          4. iteracio, 5. vektorok), regi ZH-k es mintak (2021-2026).

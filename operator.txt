@@ -1,0 +1,38 @@
+OPERATOROK, PRECEDENCIA                                             [ZH1+2]
+=============================================================================
+  Aritm.:  +  -  *  /  %          Ertekadas: =  +=  -=  *=  /=  %=
+  Novel / csokkent:  x++  ++x  x--  --x
+    int x = 5;
+    int y = x++;       // y = 5, x = 6   (elobb az ertek, aztan novel)
+    int z = ++x;       // x = 7, z = 7   (elobb novel)
+  Relacios (bool-t ad):  ==  !=  <  <=  >  >=
+  Logikai:  !  &&  ||        (& | ^ bitenkenti; feltetelhez && es ||)
+  Ternaris:  feltetel ? ertek_ha_igaz : ertek_ha_hamis
+    int a = 8;
+    int b = (a > 5 ? 10 : 20);
+    string tipus = a % 2 == 0 ? "paros" : "paratlan";
+  Szoveg: + osszefuz;  string + int -> string;  char + char -> int (!)
+
+  ROVIDZAR: &&-nal ha az elso hamis, a masodik ki sem ertekelodik;
+  ||-nal ha az elso igaz, a masodik sem. Hasznos a hiba elkerulesere:
+    int db = 0, ossz = 10;
+    if (db != 0 && ossz / db > 10)       // nincs 0-val osztas
+        Console.WriteLine("nagy");
+
+  PRECEDENCIA (felul = eros, alul = gyenge):
+  primary:     x[i]  x++  x--  f(x)
+  unaris:      +x  -x  !x  ~x  ++x  --x  (tipus)x
+  szorzo:      *  /  %
+  additiv:     +  -
+  shift:       <<  >>
+  relacios:    <  <=  >  >=
+  egyenloseg:  ==  !=
+  bit:         &   utana   ^   utana   |
+  logikai:     &&  (erosebb, mint a ||)
+  logikai:     ||
+  feltetel:    ?:
+  ertekadas:   =  +=  -=  *=  ...
+  Peldak:  -1 + 3 * 5 = 14     24 + 9 % 7 = 26     (24 + 5) % 7 = 1
+  a || b && c  ==  a || (b && c)      x % 2 == 0  ==  (x % 2) == 0
+  11 << 2 + 1  ==  11 << 3  =  88
+  Ha nem vagy 100%-ig biztos: ZAROJELEZZ (kulonosen && es || vegyitve)!

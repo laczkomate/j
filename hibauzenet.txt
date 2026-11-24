@@ -1,0 +1,42 @@
+GYAKORI HIBAUZENETEK  (VS: Error List ablak; a kod pl. CS1002)
+=============================================================================
+FORDITASI HIBAK (a program el sem indul)
+  CS1002  ; expected                hianyzo pontosvesszo (ELOZO sorban nezd)
+  CS1513  } expected                hianyzo kapcsos zarojel
+  CS0103  name does not exist       elgepeles / nincs deklaralva / hatokoron
+                                    kivul (a for-i a ciklus utan mar nincs)
+  CS0165  unassigned local variable  nincs ertekadas: adj kezdoerteket
+  CS0029 / CS0266  cannot implicitly convert 'double' to 'int'
+                                    szukito konverzio: (int) vagy Math.Round
+  CS0161  not all code paths return a value
+                                    van olyan ag, ahol nincs return
+  CS0128 / CS0136  already defined  valtozo ujradeklaralasa a hatokoreben
+  CS0163 / CS8120  control cannot fall through
+                                    switch: hianyzik a break
+  CS0246  type or namespace not found
+                                    hianyzo using (System.Collections.Generic,
+                                    System.IO, System.Globalization) / hiba
+  CS0120  object reference is required (static)
+                                    static metodusbol nem-static tagot hivsz
+  CS0019  operator cannot be applied   pl. string == int, bool + int
+  CS1503  cannot convert argument      rossz tipusu parameter a hivasban
+  Figyelmeztetes (sarga, warning) NEM hiba: nullable (CS8600...), nem
+  hasznalt valtozo (CS0168). A program elindul.
+
+FUTASI HIBAK (kivetel, a program leall)
+  FormatException           Parse hibas szovegre (ures, betu, tizedespont vs
+                            vesszo!) -> TryParse
+  IndexOutOfRangeException  tomb index < 0 vagy >= Length (tipikus: <= a
+                            for-ban; hianyzo mezo a Split utan)
+  ArgumentOutOfRangeException  lista index / Insert / RemoveAt hibas (Count!)
+  NullReferenceException    null-ra hivatkozol: objektum-tomb elem nincs
+                            new-zva, nincs inicializalt lista, ReadLine() null
+  DivideByZeroException     egesz osztas 0-val (double-nel: Infinity / NaN)
+  InvalidOperationException foreach kozben modositod a listat
+  FileNotFoundException     a CSV utvonala: nincs a futtato mappaban (Copy to
+  DirectoryNotFoundException   Output Directory) vagy rossz a teljes ut
+  Csendes hiba: int tulcsordulas (nagy szorzat / hatvany): long vagy double
+
+LOGIKAI HIBAK (nincs uzenet, csak rossz az eredmeny)
+  Futtasd fejben egy kis bemenettel; kerdezd meg: mi az ertek ennel a sornal?
+  Lasd: j ellenorzo

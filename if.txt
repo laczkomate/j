@@ -1,0 +1,37 @@
+IF / ELSE IF / ELSE                                                 [ZH1+2]
+=============================================================================
+    int pont = 73;
+    if (pont >= 90) Console.WriteLine("jeles");
+    else if (pont >= 75) Console.WriteLine("jo");
+    else Console.WriteLine("kevesebb");
+
+  Tobb utasitas: { } kell. Ha kihagyod, csak az ELSO utasitas tartozik hozza!
+    int pont = 80;
+    int db = 0;
+    if (pont > 50)
+    {
+        db++;
+        Console.WriteLine("atment");
+    }
+  Else if lanc: FELULROL lefele, az elso igaz agon fut le, a tobbi kimarad.
+  -> a sorrend szamit: a szukebb / specialisabb feltetel menjen ELOL.
+
+  Feltetelek:
+  intervallum [a;b]   :  x >= a && x <= b         nyilt (a;b): x > a && x < b
+  intervallumon KIVUL :  x < a || x > b
+  oszthato n-nel      :  x % n == 0
+  paros / paratlan  :  x % 2 == 0  /  x % 2 != 0   (negativnal != 0, nem == 1)
+  ket ertek egyike    :  x == 3 || x == 5            (NEM: x == 3 || 5)
+  bool valtozo        :  if (van) ...    if (!van) ...
+  Szoveg: == a tartalmat hasonlitja, de a kis/nagybetu KULONBOZIK:
+    string v = "Igen ";
+    if (v.Trim().ToLower() == "igen") Console.WriteLine("igen ag");
+  Egymasba agyazas = &&:   if (a) { if (b) ... }   ==   if (a && b)
+
+  Tobb ag egymas utan (kulon if-ek) NEM ugyanaz, mint else if: kulon if-nel
+  mindegyik feltetel kiertekelodik, es tobb is lefuthat.
+  Gyakori hibak:
+  - if (x = 5)  <- ertekadas!  Helyes: if (x == 5)
+  - if (x > 3);  <- ures utasitas a ; miatt
+  - double == double egyenlosegvizsgalat: pontatlan lehet
+  Tobbagu valasztas diszkret ertekekre: j switch

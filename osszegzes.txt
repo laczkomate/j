@@ -1,0 +1,35 @@
+OSSZEGZES / SZORZAT / MEGSZAMOLAS / ATLAG             (pszeudokod, nem C#)
+=============================================================================
+Felismeres: "osszesen", "osszege", "hany db", "atlag", "feltetelnek megfelelo"
+Bemenet: elemek sorozata (tomb: Length, lista: Count)   Kimenet: egy szam
+
+OSSZEGZES
+   s = 0                          <- nullazas a ciklus ELOTT (szorzatnal: 1)
+   ciklus minden elemre:  s = s + elem
+   kiir s
+FELTETELES OSSZEGZES
+   ciklus minden elemre:  ha (feltetel(elem))  s = s + elem
+MEGSZAMOLAS
+   db = 0
+   ciklus minden elemre:  ha (feltetel(elem))  db = db + 1
+ATLAG  (felteteles is)
+   s = 0;  db = 0
+   ciklus minden elemre:  ha (feltetel(elem)) { s = s + elem;  db = db + 1 }
+   ha (db > 0)  atlag = s / db        egyebkent: "nincs ilyen elem"
+   - az s es db UGYANAZZAL a feltetellel gyulik
+   - egesz osszegnel az osztas elott legyen valos: (double) s / db
+   - db == 0 esetben NE oszts: kulon ag (vagy a feladat megengedi, hogy van)
+KEPLETES OSSZEG (pl. minden elemre f(elem) kepletet kell szamolni)
+   ciklus minden elemre:  ha (feltetel)  s = s + f(elem)
+   - nagy ertekeknel long / double (Math.Pow(...) double-t ad)
+CSOPORTONKENT
+   az s, db nullazasa MINDEN csoport ciklusanak ELEJEN (j csoport)
+OBJEKTUM-LISTA: elem helyett lista[i].mezo (pl. lista[i].ar)
+
+Kerdezd meg magad:
+  - milyen tipusu az s? (int tulcsordulhat? double kell?)
+  - a feltetel zart vagy nyilt hatar? (< vagy <=, "fololt" = >)
+  - mi a kimenet, ha db == 0?
+  - kell-e kerekites / formazas kiirasnal? (j kiir, j math)
+Forras: 06_Tomb_Lista 9., 12. dia (osszeg, atlag; int csonkolas);
+        Feladatgyujtemeny 5.1, 5.2 e) f);  ZH1 2024/25 3c, 2025/26 3d.

@@ -1,0 +1,33 @@
+MATH, KEREKITES, MEGKEZDETT EGYSEG                                  [ZH1+2]
+=============================================================================
+  Math.Abs(x)   Math.Pow(alap, kitevo)   Math.Sqrt(x)   Math.PI
+  Math.Round(x)   Math.Round(x, 2)   Math.Ceiling(x)   Math.Floor(x)
+  Math.Truncate(x)   Math.Max(a, b)   Math.Min(a, b)   (ket szamra)
+  Pow / Ceiling / Floor / Round DOUBLE-t ad vissza: egeszhez cast kell.
+    double x = 7.5;
+    int r = (int)Math.Round(x);              // 8
+    double p = Math.Pow(3, 4);               // 81
+    double g = Math.Sqrt(16);                // 4
+    double tiz = Math.Round(12.3456, 1);     // 12,3
+  FIGYELEM: Math.Round "bankari": a .5 a legkozelebbi PAROS szam fele megy
+  Math.Round(2.5) -> 2    Math.Round(3.5) -> 4    Math.Round(0.5) -> 0
+  Matematikai (felfele a .5) kerekites:
+    double v = Math.Round(2.5, MidpointRounding.AwayFromZero);   // 3
+
+  Kerekites tobbszorosre (50-re, 100-ra): osszeg / egyseg, kerekit, * egyseg
+    double ar = 1234;
+    double k = Math.Round(ar / 100.0) * 100;     // 1200  (.5 esetet nezd!)
+
+  MEGKEZDETT EGYSEG (pl. minden megkezdett 10 dkg / 100 g):
+    int gramm = 235;
+    int egyseg = (int)Math.Ceiling(gramm / 100.0);    // 3 (tort kell!)
+    int egyseg2 = (gramm + 99) / 100;                 // 3 (csak egeszekkel)
+  Hibas: Math.Ceiling(gramm / 100) -> az egesz osztas mar csonkolt (2)
+
+  Szazalek:
+    double eredeti = 1000;
+    double kedv = eredeti * (100 - 15) / 100.0;       // 15% kedvezmeny -> 850
+    double tobb = eredeti * 1.12;                     // +12%
+  Tobblepeses kedvezmeny: egymas utan szorzas (ar * 0.75 * 0.94), nem osszeg.
+  Max / Min ket szamra: ZH1-ben ha bizonytalan vagy, irj if-et.
+  Csak a veg eredmenyt kerekitsd (a koztes lepeseket ne), ha nem kerik.

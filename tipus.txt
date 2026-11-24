@@ -1,0 +1,39 @@
+TIPUSOK, KONVERZIO                                                  [ZH1+2]
+=============================================================================
+  egesz:  int (4 bajt, kb. +-2,1 milliard)  long (8 bajt)  uint  byte (0..255)
+  valos:  double (15 jegy; a valos literal alapertelmezese)   float (3.14f)
+  egyeb:  bool (true/false)   char ('a')   string ("abc")   DateTime
+  Literal: 12 (int)  12L (long)  3.14 (double)  3.14f (float)  'x'  "xy"
+  Alapertek (ertek nelkul tombelemkent): int 0, double 0.0, bool false,
+  string / objektum null
+
+  EGESZ / EGESZ = EGESZ (csonkol!):
+    int a = 7, b = 2;
+    Console.WriteLine(a / b);              // 3
+    Console.WriteLine((double)a / b);      // 3,5   (cast az osztas ELOTT)
+    Console.WriteLine(a / 2.0);            // 3,5
+    Console.WriteLine((double)(a / b));    // 3 (rossz: mar csonkolt)
+    Console.WriteLine(a % b);              // 1 (maradek)
+
+  Cast (explicit, szukites): double -> int csonkol, NEM kerekit
+    double d = 7.9;
+    int i = (int)d;                        // 7
+    int k = (int)Math.Round(d);            // 8
+  Implicit: kisebbrol nagyobb tipusra magatol (int -> double, int -> long)
+    int n2 = 5;
+    double e = n2;
+    long l = n2;
+    // int j = d;     <- FORDITASI HIBA (double -> int)
+
+  Aritmetika eredmenytipusa:
+  - azonos tipus -> ugyanaz, de min. int (byte + byte -> int)
+  - egesz op valos -> valos;  int op long -> long;  double op float -> double
+  - char + char -> int;  string + barmi -> string
+
+  Tulcsordulas: az int vege kb. 2,1 milliard; nagy szorzat / hatvany:
+    long nagy = 100000L * 100000L;
+    double hatvany = Math.Pow(95, 4);
+  char: 'A' + 1 -> int;   (char)('A' + 1) -> 'B'
+  Szoveg <-> szam: int.Parse(s) / TryParse;  x.ToString() vagy $"{x}"
+  bool: if (van) ...  (nincs bool <-> szam konverzio)
+  Ertek- es referenciatipus: j osztaly

@@ -1,0 +1,34 @@
+ELDONTES / KIVALASZTAS / LINEARIS KERESES               (pszeudokod, nem C#)
+=============================================================================
+ELDONTES: "van-e olyan elem, amelyre igaz a feltetel?"
+   van = hamis
+   ciklus minden elemre:  ha (feltetel(elem)) { van = igaz;  kilep (break) }
+   kiir: van ? "van ilyen" : "nincs ilyen"
+   - a "kilep" elhagyhato (csak gyorsabb); a van = igaz ne irodjon felul
+MIND-E: "igaz-e MINDEN elemre a feltetel?"
+   mind = igaz
+   ciklus minden elemre:  ha (NEM feltetel(elem)) { mind = hamis;  kilep }
+   - ez a "van-e olyan, amelyre NEM igaz" tagadasa
+   - ures sorozatnal a mind = igaz (kerdes: ezt akarom?)
+LINEARIS KERESES: "melyik indexen van az elso olyan elem, amely ...?"
+   idx = -1
+   i = 0
+   amig (i < n ES idx == -1):   ha (feltetel(elem[i])) idx = i;   i = i + 1
+   ha (idx == -1) "nincs talalat"   egyebkent kiir (idx, elem[idx])
+   - kulcs: az elso talalat utan megall; a -1 = "nincs" jel
+   - szoveges egyezes: elobb Trim + ToLower mindket oldalon (j string)
+KIVALASZTAS: ha BIZTOSAN van talalat (nincs "nincs" ag)
+   i = 0;   amig (NEM feltetel(elem[i]))  i = i + 1;   ... elem[i]
+FELHASZNALOI KERESO (ZH2 jellegu): bekert ertekek -> logikai fuggveny hivasa
+   a lista elemein; talalat: kiiras a minta szerint; ha egy sincs: uzenet
+   (kell egy bool "volt-e talalat" jelzo a kiiratas melle)
+CSOPORTONKENT eldontes: "van-e olyan csoport, ahol minden elem ...":
+   van = hamis
+   ciklus csoportokra:
+      mind = igaz
+      ciklus a csoport elemein:  ha (NEM feltetel) { mind = hamis; kilep }
+      ha (mind)  van = igaz
+Kerdezd meg magad: ures lista? tobb talalat - melyik kell (elso/osszes)?
+  Kis/nagybetu? a feltetel vegyes (&&, ||): zarojelezve van?
+Forras: Feladatgyujtemeny 5.2 h) i);  ZH1 2024/25 3d, 3e/b; 2025/26 3f/ii;
+        ZH2 5. feladat (F5_ logikai fuggveny + felhasznaloi kereso).

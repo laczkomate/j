@@ -1,0 +1,49 @@
+PROGRAM VAZ, VALTOZOK, HATOKOR                                      [ZH1+2]
+=============================================================================
+  TOP-LEVEL STATEMENT TILOS! Mindig: osztaly + Main metodus.
+  (Uj projektnel pipald be: "Do not use top-level statements".)
+
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Globalization;
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Hello");
+        }
+    }
+
+  Valtozo: tipus nev;   vagy   tipus nev = kezdoertek;
+    int db;
+    int ossz = 0;
+    double atlag = 0.0;
+    string nev = "Ede";
+    bool van = false;
+    db = 5;
+    db++;
+    ossz += db;
+  Konstans: kezdoertek kotelezo, nem valtoztathato.
+    const double Pi = 3.14;
+  Azonosito: betu vagy _ kezdet; betu, szamjegy, _ folytatas; kis/nagybetu
+  KULONBOZIK; ekezet ne legyen. Elnevezes: valtozo camelCase (osszeg,
+  maxIndex), osztaly / metodus / enum PascalCase (Termek, F2_Ar).
+
+  HATOKOR: a deklaraciotol a blokk ( { } ) vegeig el a valtozo.
+  - kulso blokk valtozojat belso blokkban NEM deklaralhatod ujra
+  - egymas melletti blokkokban ugyanaz a nev lehet
+  - a for-ban deklaralt i a ciklus utan mar nem letezik; ha utana is
+  kell, deklaralj elotte:  int i;  for (i = 0; i < 5; i++) ...
+
+  GLOBALIS valtozo: az osztalyban, a metodusokon KIVUL, static kulcsszoval.
+  Minden metodusbol latszik; csak ha feltetlenul kell (allando memoria).
+    class Szamlalo
+    {
+        static int hivasok = 0;
+        static void Noveld() { hivasok++; }
+        static void Main() { Noveld(); Console.WriteLine(hivasok); }
+    }
+
+  Megjegyzes: // egy sor     /* tobb sor */
+  Sarga figyelmeztetes (warning) nem hiba; a piros (error) az.

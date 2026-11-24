@@ -1,0 +1,50 @@
+SWITCH-CASE                                                         [ZH1+2]
+=============================================================================
+    int nap = 3;
+    switch (nap)
+    {
+        case 1:
+            Console.WriteLine("hetfo");
+            break;
+        case 2:
+        case 3:
+            Console.WriteLine("kedd vagy szerda");
+            break;
+        default:
+            Console.WriteLine("egyeb");
+            break;
+    }
+  - Minden NEM ures case vegen break (vagy return / continue) kell:
+  C#-ban nincs "atesik" a kovetkezo agra (fordito hiba: CS0163).
+  - Ures case-ek egymas utan kozos agra futnak (a fenti 2 es 3).
+  - default: az "egyebkent" ag, elhagyhato.
+  - A kifejezes tipusa: egesz, char, string, enum.
+
+  Szoveggel:
+    string valasz = "igen";
+    switch (valasz)
+    {
+        case "igen": Console.WriteLine("ok"); break;
+        case "nem": Console.WriteLine("nem"); break;
+        default: Console.WriteLine("ismeretlen"); break;
+    }
+  Szoveg-switch elott: valasz = valasz.Trim().ToLower(); (kis/nagybetu!)
+
+  Savok - relacios minta (C# 9, az oran szerepelt):
+    //!nocompile
+    int pont = 73;
+    switch (pont)
+    {
+        case >= 0 and < 50: Console.WriteLine("gyenge"); break;
+        case >= 50 and < 80: Console.WriteLine("kozepes"); break;
+        case >= 80 and <= 100: Console.WriteLine("jo"); break;
+        default: Console.WriteLine("ervenytelen"); break;
+    }
+  Tovabbi mintak: case < 0 or > 100:    case not 5:
+  A sorrend szamit (az elso illeszkedo case fut), a case-ek nem fedhetik
+  egymast ugy, hogy egy case sose teljesulhessen.
+
+  Enummal (j osztaly):  case Napok.Het: ...; break;
+  Mikor if, mikor switch? Diszkret ertekeknel (1,2,3 / "igen","nem") switch;
+  osszetett feltetelnel (&&, ||, tobb valtozo) if - else if.
+  A switch-ben deklaralt valtozo az egesz switch blokkban latszik.

@@ -1,0 +1,44 @@
+DATUM ES IDO                                                        [ZH1+2]
+=============================================================================
+  using System.Globalization;        (CultureInfo-hoz)
+    DateTime most = DateTime.Now;                   // datum + ido
+    DateTime ma = DateTime.Today;                   // ma, 00:00
+    DateTime d = new DateTime(2024, 12, 17);        // ev, honap, nap
+    DateTime e = new DateTime(2024, 12, 17, 9, 30, 0);   // + ora, perc, mp
+  Szovegbol (CSV): ParseExact(szoveg, formatum, kultura)
+    DateTime a = DateTime.ParseExact("2024.12.17", "yyyy.MM.dd",
+                                     CultureInfo.InvariantCulture);
+    DateTime b = DateTime.ParseExact("2024.11.25 11:30", "yyyy.MM.dd HH:mm",
+                                     CultureInfo.InvariantCulture);
+  Formatum:  yyyy ev | MM HONAP | dd nap | HH ora (0-23) | mm PERC
+  FIGYELEM: HH = 24 oras, hh = 12 oras! A ZH kiirasa "hh:mm"-et irhat, de a
+  13:00-t HH-val kell beolvasni. mm = perc, MM = honap (kis/nagybetu szamit!).
+  Alkatreszek:  d.Year  d.Month  d.Day  d.Hour  d.Minute  d.DayOfWeek
+  Osszehasonlitas kozvetlenul:  <  >  ==  <=  >=
+    DateTime d = new DateTime(2024, 12, 17);
+    DateTime a = new DateTime(2023, 12, 14, 18, 30, 0);
+    bool elmult = d < DateTime.Today;
+    DateTime tol = new DateTime(2023, 12, 14);
+    DateTime ig = new DateTime(2023, 12, 15);
+    bool idoszak = a >= tol && a <= ig;
+  Ora/perc is van az adatban? A veg napjat is bevenni: a < ig.AddDays(1),
+  vagy a.Date <= ig  (a .Date az idot 00:00-ra allitja).
+  Hozzaadas:  d.AddDays(182)  d.AddMonths(1)  d.AddHours(2)  d.AddMinutes(30)
+  Kulonbseg: TimeSpan
+    DateTime a = new DateTime(2024, 12, 1);
+    DateTime b = new DateTime(2024, 12, 17, 9, 30, 0);
+    TimeSpan kul = b - a;
+    double napok = kul.TotalDays;
+    int teljesNap = kul.Days;
+    double percek = kul.TotalMinutes;
+  Kiiras:
+    DateTime d = new DateTime(2024, 12, 17);
+    DateTime b = new DateTime(2024, 11, 25, 11, 30, 0);
+    Console.WriteLine(d.ToString("yyyy.MM.dd"));                // 2024.12.17
+    Console.WriteLine(b.ToString("yyyy.MM.dd HH:mm"));    // 2024.11.25 11:30
+    Console.WriteLine(d.ToString("yyyy MMMM d", new CultureInfo("hu-HU")));
+    Console.WriteLine(d.ToString("MMMM d. HH:mm", new CultureInfo("hu-HU")));
+  (MMMM = honapnev; magyarul a "hu-HU" kulturaval: 2024 december 17)
+  Ha a feladat konkret mai datumot ir elo, azt add meg (new DateTime(...));
+  a DateTime.Now minden futasnal mas, a minta kimenet nem egyezne.
+  DateOnly (az oran): new DateOnly(2026, 9, 1) - ido nelkuli datum.

@@ -1,0 +1,37 @@
+FORMAI KERETEK  (ZH1 + ZH2)
+=============================================================================
+MAPPA / BEADAS
+  - Mappa: C:\temp\<NEPTUNKOD>   (A csoportnal: A_<NEPTUNKOD> - a kiiras
+    szerint!). Ebben dolgozol; a teljes mappat tomoritsd (.zip/.rar/.7z)
+    ugyanazzal a nevvel (pl. IKSI78.zip), es toltsd fel a megadott helyre.
+  - ZH1: a projektek neve a feladat sorszama: 01, 02, 03
+  - ZH2: egyetlen konzolos alkalmazas; a CSV a mellekelt input fajl.
+
+PROJEKT
+  - Konzolos alkalmazas: osztaly + static void Main
+  - TOP-LEVEL STATEMENT TILOS: uj projektnel pipald be a
+    "Do not use top-level statements" jelolonegyzetet
+    (nelkule a ZH automatikusan elegtelen).
+  - IntelliCode osszes funkcioja KIKAPCSOLVA: Tools > Options.
+
+FELADATOK
+  - Ellenorzott bekeres = hibas ertekre UJRAKERES: do-while + TryParse.
+    Ahol a feladat nem keri az ellenorzest: ervenyes adatot feltetelezz.
+  - Fuggveny neve az eloirt ELOTAGGAL (F2_, F5_, F7_ ...); a parameterlista
+    es a visszateresi tipus PONTOSAN a kiiras szerint:
+       "egesz ertekkel visszatero"      -> int
+       "valos ertekkel visszatero"      -> double
+       "logikai fuggveny"               -> bool
+       "szoveges listaval visszatero"   -> List<string>
+       "eljaras"                        -> void (nem ter vissza ertekkel)
+  - Kiiras a MINTA szerint: szoveg, sorrend, tizedesek, mertekegyseg.
+  - "Extra" resz bonusz: elobb az alap legyen kesz.
+  - A kesobbi reszfeladat gyakran az elozo fuggvenyere epul
+    ("a 3. feladatban megirt fuggveny segitsegevel").
+
+TILOS (reszletek: j tiltott)
+  - orai anyag, internet, kommunikacio (MI is): automatikus elegtelen
+  - lambda / LINQ; ZH1-ben List<T> es beepitett algoritmus-metodusok
+
+TIPP: mentsd es forditsd gyakran, reszfeladatonkent futtasd.
+GYAKORLASHOZ: IntelliCode ki, orai anyag nelkul, idore (j gyakorlas).

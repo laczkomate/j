@@ -1,0 +1,29 @@
+EGYEDI ERTEKEK KIGYUJTESE                                (pszeudokod, nem C#)
+=============================================================================
+Felismeres: "mindegyiket csak egyszer", "kulonbozo", "gyujtse ki a
+            kategoriakat / tantargyak / gyartok nevet"
+Bemenet: lista (objektumokkal)   Kimenet: szoveges lista, ismetlodes nelkul
+   [ZH2: listaval; a szoveges listaval visszatero fuggveny (F7_) tipikus]
+
+   egyedi = uj szoveges lista
+   ciklus a forras minden elemere:
+      ertek = elem.mezo
+      van = hamis
+      ciklus j az egyedi listan:
+          ha (egyedi[j] == ertek) { van = igaz;  kilep }
+      ha (NEM van)  egyedi.Add(ertek)
+   visszater egyedi
+   - a belso ciklus = eldontes tetel (j kereses); ugyanez a Contains-szel
+     csak akkor szabad, ha a ciklussal is meg tudod irni
+
+RENDEZVE: a gyujtes UTAN  egyedi.Sort()            (abc szerint novekvo)
+HATULROL / FORDITOTT SORRENDBEN: egyedi.Sort() majd egyedi.Reverse()
+
+Kerdezd meg magad:
+  - a kis/nagybetu szamit? ("Leves" es "leves" ugyanaz?) -> Trim, ToLower
+  - van-e felesleges szokoz a szoveg szelen?
+  - hol hasznaljuk fel? Altalaban ezekbol a listabol indul a CSOPORTONKENTI
+    feldolgozas (j csoport): minden egyedi ertekre egy kor.
+  - ures forras: ures az eredmeny is
+Forras: ZH2 2023/24 7., 2024/25 7. feladat (F7_), 2022/23 7. feladat;
+        LEV_TAV 2025/26 2.7 (rendezve adja vissza).

@@ -1,0 +1,44 @@
+KIIRATAS ES FORMAZAS                                                [ZH1+2]
+=============================================================================
+  Console.Write("szoveg");       // nem tor sort
+  Console.WriteLine("szoveg");   // sortoressel
+  Console.WriteLine();           // ures sor
+  Console.Clear();               // kepernyo torlese ("uj kepernyon")
+
+  Interpolacio ($ jel): {kifejezes} behelyettesites
+    int x = 7;
+    double ar = 1234.5678;
+    string nev = "Ede";
+    Console.WriteLine($"Szia {nev}! x={x}, ketszerese={x * 2}");
+    Console.WriteLine($"Ar: {ar:F2} Ft");          // 2 tizedes: 1234,57
+    Console.WriteLine($"Ar: {ar:F0} Ft");          // 0 tizedes (kerekit)
+    Console.WriteLine($"{x:D3}");                  // 007 (egesz, min. 3 jegy)
+    Console.WriteLine($"[{nev,8}] [{nev,-8}]");    // jobbra / balra igazitas
+    Console.WriteLine("x={0}, y={1}", x, ar);   // regi forma (orai)
+
+  hh:mm kiiras percbol (ketjegyu, kezdo nullaval)
+    int perc = 275;
+    int ora = perc / 60;
+    int pp = perc % 60;
+    Console.WriteLine($"{ora:D2}:{pp:D2}");        // 04:35
+
+  Elvalasztojel az utolso elem UTAN ne legyen (index vizsgalat):
+    int[] t = { 4, 8, 15 };
+    for (int i = 0; i < t.Length; i++)
+    {
+        Console.Write(t[i]);
+        if (i < t.Length - 1) Console.Write(", ");
+    }
+    Console.WriteLine();
+
+  Escape: \n sortores  \t tab  \" idezojel  \\ backslash
+    Console.WriteLine("Sor1\nSor2\t\"idezett\"");
+    string ut = @"C:\temp\adat.csv";             // @ = verbatim: nincs escape
+  Szin (oran / feladatgyujtemeny):
+    Console.ForegroundColor = ConsoleColor.Cyan;
+    Console.WriteLine("kek");
+    Console.ResetColor();
+
+  Tizedesjel: a gep nyelvi beallitasa szerint (magyar: vesszo). A ZH mintak is
+  vesszot mutatnak. Szazalek: {p:F1}%   Penz: {ar:F0} Ft
+  Kiiras = MINTA szerint: szoveg, szokoz, tizedes, mertekegyseg, sorrend.

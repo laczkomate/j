@@ -1,0 +1,47 @@
+CIKLUSOK                                                            [ZH1+2]
+=============================================================================
+  while: a feltetel ELOL; lehet, hogy egyszer sem fut le
+    int i = 0;
+    while (i < 5) { Console.WriteLine(i); i++; }
+  do-while: a feltetel UTAN; legalabb egyszer lefut (ellenorzott bekeres!)
+    int x;
+    do { x = int.Parse(Console.ReadLine()); } while (x < 0);
+  for: (kezdet; feltetel; lepes)
+    for (int j = 0; j < 5; j++) Console.WriteLine(j);          // 0..4
+    for (int j = 10; j >= 0; j -= 2) Console.WriteLine(j);   // 10, 8, ... 0
+  foreach: minden elemre; csak OLVASAS (az iteracios valtozo masolat)
+    int[] t = { 4, 8, 15 };
+    foreach (int e in t) Console.WriteLine(e);
+  break: azonnal kilep a (legbelso) ciklusbol
+  continue: ugras a kovetkezo iteraciora (for-nal: eloszor a lepes fut)
+    for (int j = 0; j < 10; j++)
+    {
+        if (j % 2 == 0) continue;
+        if (j > 7) break;
+        Console.WriteLine(j);                                  // 1 3 5 7
+    }
+  Vegtelen ciklus + break:
+    int szam = 0;
+    while (true)
+    {
+        szam++;
+        if (szam == 3) break;
+    }
+  Tobb leallasi feltetel a ciklusfejben:
+    int db = 0;
+    string be = "";
+    while (db < 10 && be != "STOP")
+    {
+        be = Console.ReadLine();
+        db++;
+    }
+  Egymasba agyazott ciklus: kulon indexvaltozo (i, j):
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 4; j++)
+            Console.Write(i * 4 + j + " ");
+  Hatokor: a for-ban deklaralt i a ciklus utan nem letezik.
+  Hatarok: tomb: i < t.Length (NEM <=)    lista: i < l.Count
+  Gyakori hibak: nincs lepteto sor (vegtelen ciklus); ';' a while / for
+  zarojele utan (ures torzs); foreach-ben az elem ertekadasa (nem megy).
+  Ciklus valasztas: ismert db -> for; "amig" -> while; legalabb egyszer ->
+  do-while; minden elem olvasasa -> foreach; indexszel iras -> for.

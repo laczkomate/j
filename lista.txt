@@ -1,0 +1,33 @@
+LISTA  List<T>                                                    [csak ZH2]
+=============================================================================
+  using System.Collections.Generic;      (ZH1-ben TILOS: tomb alapu lista)
+    List<int> sz = new List<int>();
+    List<string> nevek = new List<string>();
+    List<int> k = new List<int>() { 8, -2, 43 };       // kezdoertekkel
+  Meret: nevek.Count  (tombnel Length!)     Elem: nevek[i]
+    List<string> nevek = new List<string>();
+    nevek.Add("Eva");               // a vegere
+    nevek.Add("Ede");
+    nevek.Add("Zoli");
+    nevek.Insert(0, "Anna");        // adott indexre
+    nevek.RemoveAt(1);              // index szerint torol
+    nevek.Remove("Ede");            // ertek szerint az ELSO egyezot
+    nevek.Sort();                   // novekvo (lambda NELKUL)
+    nevek.Reverse();                // sorrend megforditasa
+    nevek.Clear();                  // mindent torol
+  Rendezve VISSZAFELE ("hatulrol"): elobb Sort(), utana Reverse().
+  Bejaras:
+    List<string> lista = new List<string>() { "a", "b" };
+    for (int i = 0; i < lista.Count; i++) Console.WriteLine(lista[i]);
+    foreach (string s in lista) Console.WriteLine(s);
+  foreach KOZBEN nem lehet Add / Remove / Clear (InvalidOperationException):
+  ilyenkor for ciklus (torleshez: j torles).
+  A lista REFERENCIA: ha a metodus modositja a parameterkent kapott listat,
+  a hivonal is valtozik (j fuggveny, j kivalogatas).
+  Ures lista: Count == 0; max/min kereses elott ellenorizd.
+  Objektumok listaja:  List<Elem> lista = new List<Elem>();    (j osztaly)
+  ZH2-ben kerulendo / ciklussal helyettesitendo: Contains, IndexOf, Find,
+  Exists, Sum, Max, Min, Average. Lambdas valtozat (=>) mindig TILOS.
+  Lista -> tomb nincs automatikusan: ismeretlen elemszam -> lista;
+  ismert -> tomb.
+  Beolvasas fajlbol listaba: j csv.

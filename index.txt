@@ -1,0 +1,51 @@
+MP1 JEGYZET-KARTYAK                     hasznalat:   j <nev>     pl. j switch
+=============================================================================
+Jeloles:  [ZH1+2]    mindket ZH-n szabad      [csak ZH2]  ZH1-ben TILOS
+          [TILOS]    sehol sem szabad         [orai]      oran volt, ritkabb
+Szintaxis-kartyak: C# reszletek, feladattol fuggetlen peldakkal.
+Tetel-kartyak: PSZEUDOKOD, szandekosan nem C#: a C# atirast te tanuld meg!
+
+KERETEK
+  gyakorlas    hogyan hasznald ezeket (4 kerdes, lepcso, idore)
+  zh1          ZH1 terkep: 3 feladat, mit kernek, melyik kartya kell
+  zh2          ZH2 terkep: tipikus feladatsor, melyik tetel hova
+  forma        formai keretek (Main, mappa, F2_ prefixum, bekeres)
+  tiltott      mi tilos ZH1 / ZH2-ben, mit irj helyette
+  ellenorzo    beadas elotti kerdesek (buktatok)
+  hibauzenet   fordito- es futasi hibak ertelmezese
+
+SZINTAXIS (C#)
+  program      vaz, valtozo, hatokor, const, globalis
+  kiir         Write/WriteLine, $"{x:F2}", D2, hh:mm kiiras
+  beker        ReadLine, Parse, TryParse, ellenorzott bekeres
+  tipus        tipusok, cast, int/int, eredmenytipus
+  operator     operatorok, precedencia, rovidzar, ?:
+  math         Math.*, kerekites, megkezdett egyseg
+  if           if / else if / else, feltetelek
+  switch       switch-case, relacios minta
+  ciklus       while, do-while, for, foreach, break, continue
+  tomb         tomb, sorfolytonos index, 2D
+  lista        List<T> muveletek                              [csak ZH2]
+  random       Random, intervallumok, tizedes pontossag
+  string       string metodusok, char
+  datetime     DateTime, ParseExact, TimeSpan
+  fuggveny     metodus, parameter, return, F2_ prefixum, ref/out
+  osztaly      class, struct, enum, ertek vs referencia
+  csv          StreamReader, Split, beolvasas lepesei         [ZH2]
+
+TETELEK (pszeudokod)
+  tetelek      FELISMERO TABLA: feladatszoveg -> melyik tetel
+  osszegzes    osszegzes, megszamolas, atlag (felteteles is)
+  kereses      eldontes (van-e / mind-e), kivalasztas, lin. kereses
+  maximum      max/min kivalasztas (ertek + index, felteteles)
+  kivalogatas  kivalogatas (fuggveny es eljaras)
+  egyedi       egyedi ertekek kigyujtese
+  rendezes     rendezes (beepitett es kezi)
+  csoport      csoportonkenti feldolgozas (tomb es lista)
+  parosites    paros osszehasonlitas (utkozes)
+  kulcsszo     kulcsszoig tarto bekeres, tobb leallasi feltetel
+  torles       torles es modositas listaban
+  arkalk       szelekcios arkalkulacio (savok, kedvezmeny, kerekites)
+
+Frissites: a fajlokat a GitHub-repoban szerkeszd (Edit), par perc mulva
+latszik a parancsban is.

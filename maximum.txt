@@ -1,0 +1,36 @@
+MAXIMUM / MINIMUM KIVALASZTAS  (ertek + index)           (pszeudokod, nem C#)
+=============================================================================
+ALAP (nem ures sorozat, nincs szuro):
+   max = elem[0];  idx = 0
+   ciklus i = 1 .. n-1:  ha (elem[i] > max) { max = elem[i];  idx = i }
+   - ELSO elofordulas: szigoru > (nem >=);  utolso elofordulas: >=
+   - MINIMUM: a relacios jel fordul (<)
+   - ures tomb / lista eseten NINCS elem[0]: elobb n > 0 vizsgalat
+
+FELTETELES (csak bizonyos elemek kozul):
+   van = hamis
+   ciklus i = 0 .. n-1:
+      ha (feltetel(elem[i]))
+         ha (NEM van VAGY elem[i] > max) { max = elem[i]; idx = i; van=igaz }
+   ha (NEM van)  "nincs ilyen elem"       <- a nincs-talalat eset!
+   - NE kezdj 0-val / -1-gyel, hacsak a tartomany ezt nem engedi
+     (negativ ertekeknel rossz); a van-jelzo biztonsagosabb
+
+OBJEKTUM-LISTA: az osszehasonlitas a mezon:  lista[i].ar > lista[idx].ar
+   (az indexet tarold el, mert kell a tobbi mezo is: nev, kategoria ...)
+CSOPORTONKENT: a van, max, idx minden csoportnal ujra indul (j csoport)
+KET CSOPORT SZELSOERTEKENEK OSSZEHASONLITASA:
+   max1 az 1. csoportbol, max2 a 2. csoportbol (kulon valtozok, kulon szuro),
+   UTANA hasonlitsd ossze max1-et es max2-t; kiir melyik nagyobb es az adatok
+LEGKISEBB PAROS (es hasonlo feltetel + szelsoertek): felteteles minimum, plusz
+   a "van-e egyaltalan paros" eset ("nincs paros szam" uzenet)
+KULONBSEG max - min csoportonkent: ket szelsoertek kiszamitasa, aztan kivonas.
+   (egy ciklusban mindket szelsoertek mehet)
+
+Kerdezd meg magad:
+  - mi a kezdoertek? (elso elem / van-jelzo)  - mi van, ha egy elem sem jo?
+  - ket egyforma szelsoertek: melyiket kell? (elso -> szigoru osszehasonlitas)
+  - ertek vagy index vagy a teljes objektum kell a kiirashoz?
+  - az osszehasonlitas iranya (>, <) a feladat szerint?
+Forras: 06_Tomb_Lista 13. dia (minimum, ures tomb eset);
+        Feladatgyujtemeny 5.2 g) i);  ZH1 2023/24 3e;  ZH2 4., 8. feladat.

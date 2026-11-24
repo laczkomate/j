@@ -1,0 +1,31 @@
+BEADAS ELOTTI ELLENORZO - KERDEZD MEG MAGAD
+=============================================================================
+Szamolas
+  ? Mi a 7 / 2 erteke? Es a (double)7 / 2? Hol van a (double) a kodomban?
+  ? Az atlag osztojaban mi all, ha egyetlen elem sem felel meg? (0-val osztas)
+  ? Math.Round(2.5) mennyi? Kell MidpointRounding? Ceiling ele tort kerul?
+  ? Nem csonkol-e valahol a % , a / vagy egy int -> double konverzio?
+Nullazas, kezdoertek
+  ? Hol nullazom az osszeget / szamlalot? Csoportonkent MINDEN csoport elejen?
+  ? A maximum kezdoerteke mi? Negativ szamokkal? Mi van, ha nincs talalat?
+  ? Mi tortenik ures tombbel / ures listaval?
+Hatarok
+  ? i < Length vagy i <= Length? Tombnel Length, listanal Count - melyik kell?
+  ? Zart [a;b], nyilt (a;b) vagy felig nyilt [a;b) intervallum? < vagy <=?
+  ? && es || vegyitve: kell-e zarojel?
+  ? Random: a felso hatar kizaro. Next(a, b + 1)? Egy darab Random peldany?
+  ? Tizedes pontossagu veletlen: egeszben generaltam, es 10.0-val osztottam?
+Bekeres es szoveg
+  ? TryParse elobb van-e a feltetelben, mint az ertek vizsgalata?
+  ? = vagy == ? Van-e Trim? Kis/nagybetu: ToLower / ToUpper mindket oldalon?
+  ? Szoveg: "igen" == "Igen"? Mit csinal a program?
+Gyujtemenyek
+  ? foreach-ben ertektipusu elemet (int) modositok? (az nem megy)
+  ? foreach kozben torlok / adok hozza a listahoz? (kivetel)
+  ? A kivalogato eljaras elejen torlom-e a cel listat (Clear)?
+Kiiras es forma
+  ? A kiiras betuhuen a minta? Tizedesek, szokozok, mertekegyseg, sorrend?
+  ? A fuggveny neve, prefixuma, parameterei, visszateresi tipusa a kiirasbol?
+  ? Van-e top-level statement, using System.Linq, lambda, List a ZH1-ben?
+  ? A projekt / mappa neve az eloiras szerint? IntelliCode kikapcsolva?
+Tesztelj mindig:  ures | egy elem | nincs talalat | hatarertek | hibas bevitel

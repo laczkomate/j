@@ -1,0 +1,66 @@
+FUGGVENY / ELJARAS (static metodus)                                 [ZH1+2]
+=============================================================================
+  Fuggveny: ertekkel ter vissza (return).  Eljaras: void, nem ter vissza.
+  A ZH eloirja: ELOTAG (F2_, F5_ ...), parameterek, visszateresi tipus.
+    class Program
+    {
+        static int F2_Negyzet(int x)
+        {
+            return x * x;
+        }
+        static bool F5_Paros(int x)
+        {
+            return x % 2 == 0;
+        }
+        static void F6_Kiir(string szoveg, int db)
+        {
+            for (int i = 0; i < db; i++) Console.WriteLine(szoveg);
+        }
+        static void F7_Hozzaad(List<int> l, int x)
+        {
+            l.Add(x);
+            l.Add(x * 2);
+        }
+        static void Main()
+        {
+            int n = F2_Negyzet(5);
+            if (F5_Paros(n)) Console.WriteLine("paros");
+            F6_Kiir("hello", 2);
+            List<int> lista = new List<int>();
+            F7_Hozzaad(lista, 3);
+        }
+    }
+  - Fuggveny fejlece: static visszateresi_tipus Nev(tipus param, tipus param)
+  - MINDEN ag adjon vissza erteket (CS0161). Logikai fuggvenynel eleg:
+  return feltetel;   (nem kell: if (...) return true; else return false;)
+  - A hivas helyen a fuggveny egy ERTEK: int x = F2_Negyzet(3);
+  - Parameter: ertektipus (int, double, bool...) MASOLODIK; tomb / lista /
+  objektum REFERENCIA: a metodus modositasa kivul is latszik.
+  - A metodus a Program osztalyban van, a Main elott vagy utan mindegy.
+
+  ref / out / params / alapertelmezett parameter (szoboli anyag):
+    static void Csere(ref int a, ref int b)
+    {
+        int seged = a;
+        a = b;
+        b = seged;
+    }
+    static void Oszt(int x, int y, out int hanyados, out int maradek)
+    {
+        hanyados = x / y;
+        maradek = x % y;
+    }
+    static int Osszeg(params int[] szamok)
+    {
+        int s = 0;
+        foreach (int e in szamok) s += e;
+        return s;
+    }
+    static int Szoroz(int a, int b = 2)
+    {
+        return a * b;
+    }
+  Hivas:  Csere(ref x, ref y);   Oszt(17, 5, out h, out m);   Osszeg(1, 2, 3);
+  Mas osztalyban: class Segedek { public static int Dupla(int x) {...} }
+  hivas: Segedek.Dupla(3)   (public kell, kulso osztalybol hivva)
+  Globalis valtozo: static mezo az osztalyban (j program).

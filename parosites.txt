@@ -1,0 +1,29 @@
+PAROS OSSZEHASONLITAS (UTKOZES)                          (pszeudokod, nem C#)
+=============================================================================
+Felismeres: "ugyanabban az idopontban ugyanabba a terembe", "barmely ket
+            elem", "van-e utkozes", "melyek egyeznek"
+Minden elemet minden MASIKKAL osszehasonlitunk, de minden part csak egyszer.
+
+   ciklus i = 0 .. n-2:
+      ciklus j = i+1 .. n-1:                 <- j = i+1-tol!
+         ha (egyezik(elem[i], elem[j]))
+            kiir / jelol (i es j)
+   - j = i+1: nem hasonlitod az elemet onmagaval, es a part nem kapod ketszer
+   - az "egyezik" feltetel ket vagy tobb mezot is vizsgalhat (&&)
+   - "ELEG csak a kezdes idopontjat osszehasonlitani": csak a kezdo datum/ido
+     mezo egyezeset kell vizsgalni
+
+"Adott idopontban jelenitse meg az OSSZESET": jeloljek, hogy melyik elem
+   szerepel utkozesben (bool jel[i] / jel[j] = igaz), majd masodik menetben
+   idopontonkent kiiras; vagy az utkozesek elso kiirasakor az elso elemet is
+   egyszer kiirni (kerdezd meg: mit ker pontosan a minta?)
+
+SZOMSZEDOS parok (pl. soron kovetkezo ertekek):
+   ciklus i = 0 .. n-2:   elem[i] vs elem[i+1]
+
+Kerdezd meg magad:
+  - ugyanaz a ket elem ket sorrendben is megjelenik? (nem szabad)
+  - ha 3 elem utkozik egymassal, hany par jon ki? (3)
+  - a datum osszehasonlitasa DateTime-mal (==) vagy szoveggel? (j datetime)
+  - a hataresetek: egyetlen elem, ures lista
+Forras: ZH2 2024/25 Extra feladat (vizsgak idopont + terem utkozes).

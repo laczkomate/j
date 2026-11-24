@@ -1,0 +1,49 @@
+BEKERES                                                             [ZH1+2]
+=============================================================================
+  Console.ReadLine() mindig STRING. Szamhoz at kell alakitani.
+    string s = Console.ReadLine();
+    int x = int.Parse(Console.ReadLine());       // hibas szovegre: kivetel
+    double d = double.Parse(Console.ReadLine());
+  TryParse: nincs kivetel; igaz/hamis, az ertek az out valtozoba kerul.
+    int n;
+    if (int.TryParse(Console.ReadLine(), out n)) Console.WriteLine(n);
+    else Console.WriteLine("nem szam");
+
+  ELLENORZOTT BEKERES = do-while + TryParse: hibas ertekre ujrakeres.
+    int szam;
+    do
+    {
+        Console.Write("Adj meg egy egeszet [10;100]: ");
+    } while (!int.TryParse(Console.ReadLine(), out szam)
+             || szam < 10 || szam > 100);
+  Feltetel-valtozatok (a while zarojelben, a TryParse UTAN):
+  - oszthato 50-nel:       ... || szam % 50 != 0
+  - csak 2, 3 vagy 5:      ... || (szam != 2 && szam != 3 && szam != 5)
+  - paros:                 ... || szam % 2 != 0
+  - pozitiv:               ... || szam <= 0
+  A feltetel azt mondja meg, MIKOR KERJEK UJRA (a hibas eset), nem a helyeset!
+  A TryParse kerul elore: hibas szovegnel az out ertek 0, de a || miatt
+  a tobbi feltetel mar nem szamit; forditva (elobb a szam < 10) hibas lenne.
+
+  Valos szam:
+    double r;
+    do
+    {
+        Console.Write("Valos [0;100]: ");
+    } while (!double.TryParse(Console.ReadLine(), out r) || r < 0 || r > 100);
+  FIGYELEM: valos beolvasasnal a gep nyelvi beallitasa szamit: magyar gepen
+  tizedesVESSZO ("3,5"); "3.5" hibas lehet.
+
+  Szoveges valasz (igen/nem, tipus ...):
+    string v;
+    do
+    {
+        Console.Write("Igen vagy nem? ");
+        v = Console.ReadLine().Trim().ToLower();
+    } while (v != "igen" && v != "nem");
+  Kulcsszoig olvasas (STOP): string-gyel dolgozz, szamma csak ha nem kulcsszo.
+    string be = Console.ReadLine().Trim().ToUpper();
+    bool vege = be == "STOP";
+  Ha a feladat NEM keri az ellenorzest: ervenyes adatot feltetelezz,
+  egyszeru Parse is jo.
+  Tipp: a ReadLine() null-ra figyelmeztethet (warning): nem hiba.
