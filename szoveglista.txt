@@ -1,0 +1,97 @@
+VESSZOVEL ELVALASZTOTT MEZO, SZOVEGLISTAK                       [csak ZH2]
+=============================================================================
+Termek: nev, kategoria, cimkek (string); ar, keszlet, tomeg (int);
+  akcios (bool); datum (DateTime).  cimkek pl.: "tej,tojas,liszt"
+
+BENNE VAN-E EGY ERTEK A VESSZOS MEZOBEN (pl. a film sci-fi-e?)
+    static bool BenneVan(string mezo, string keresett)
+    {
+        string[] darabok = mezo.Split(',');
+        for (int i = 0; i < darabok.Length; i++)
+            if (darabok[i].Trim().ToLower() == keresett.Trim().ToLower())
+                return true;
+        return false;
+    }
+
+TARTALMAZ-E BARMELYET EGY LISTABOL (pl. allergen-szures)
+    static bool F5_Veszelyes(Termek t, List<string> tiltott)
+    {
+        foreach (string a in tiltott)
+            if (BenneVan(t.cimkek, a))
+                return true;
+        return false;
+    }
+
+BEKERES LISTABA KULCSSZOIG, FUGGVENYKENT (nincs parametere)
+    static List<string> F8_Bekeres()
+    {
+        List<string> l = new List<string>();
+        Console.WriteLine("Add meg oket (vege = befejezes):");
+        string s = Console.ReadLine().Trim();
+        while (s.ToLower() != "vege")
+        {
+            l.Add(s);
+            s = Console.ReadLine().Trim();
+        }
+        return l;
+    }
+
+HASZNALAT: azok, amelyek EGYIKET SEM tartalmazzak
+    List<Termek> lista = new List<Termek>();
+    List<string> tilt = F8_Bekeres();
+    Console.WriteLine("Az On szamara javasolt:");
+    foreach (Termek t in lista)
+        if (!F5_Veszelyes(t, tilt))
+            Console.WriteLine($"{t.nev} - allergenek: {t.cimkek}");
+
+TOBB FELTETELES SZURES (kor, kedvelt kategoriak, feliratos)
+    List<Termek> lista = new List<Termek>();
+    List<string> kedvelt = new List<string>();
+    int minKeszlet = 12;
+    bool akciosIsJo = false;
+    foreach (Termek t in lista)
+    {
+        bool kategoriaJo = false;
+        foreach (string k in kedvelt)
+            if (BenneVan(t.cimkek, k))
+                kategoriaJo = true;
+        if (kategoriaJo && t.keszlet >= minKeszlet &&
+            (akciosIsJo || !t.akcios))
+            Console.WriteLine(t.nev);
+    }
+
+MINDEN KULONBOZO ERTEK A VESSZOS MEZOKBOL
+    static List<string> MindenCimke(List<Termek> lista)
+    {
+        List<string> egyedi = new List<string>();
+        foreach (Termek t in lista)
+        {
+            foreach (string c in t.cimkek.Split(','))
+            {
+                bool marVan = false;
+                foreach (string e in egyedi)
+                    if (e == c.Trim())
+                        marVan = true;
+                if (!marVan)
+                    egyedi.Add(c.Trim());
+            }
+        }
+        egyedi.Sort();
+        return egyedi;
+    }
+
+CSOPORTONKENT, ha egy elem tobb csoportba is tartozik (legjobb ar/cimke)
+    static void LegdragabbCimkenkent(List<Termek> lista)
+    {
+        foreach (string c in MindenCimke(lista))
+        {
+            int idx = -1;
+            for (int i = 0; i < lista.Count; i++)
+                if (BenneVan(lista[i].cimkek, c) &&
+                    lista[i].datum <= DateTime.Today)
+                    if (idx == -1 || lista[i].ar > lista[idx].ar)
+                        idx = i;
+            if (idx != -1)
+                Console.WriteLine($"{c}: {lista[idx].nev} {lista[idx].ar}");
+        }
+    }

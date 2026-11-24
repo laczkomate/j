@@ -39,3 +39,22 @@ MODOSITAS BEJARAS KOZBEN (objektum mezoje foreach-ben is modosithato)
             x.ar = (int)Math.Round(x.ar * 0.9);     // 10% kedvezmeny
     }
   foreach-ben NEM lehet: x = new Termek(); es lista.Add / RemoveAt.
+
+TORLES KET MEZO ALAPJAN (pl. rendezo + cim)
+    static bool Torol2(List<Termek> lista, string nev, string kategoria)
+    {
+        for (int i = 0; i < lista.Count; i++)
+        {
+            if (lista[i].nev.ToLower() == nev.Trim().ToLower() &&
+                lista[i].kategoria.ToLower() == kategoria.Trim().ToLower())
+            {
+                lista.RemoveAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
+FIX AZONOSITO TORLESE (pl. "Torolje az NBKL5NQ azonositoju termeket"):
+    List<Termek> lista = new List<Termek>();
+    if (!Torol(lista, "NBKL5NQ"))
+        Console.WriteLine("Nincs ilyen azonosito.");

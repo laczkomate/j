@@ -59,3 +59,10 @@ RANDOM GENERALT ADAT
     int napok = rnd.Next(1, 8);                       // 1..7
     double suly = rnd.Next(10, 501) / 10.0;           // 1.0..50.0, 1 tizedes
     double ar2 = rnd.Next(100, 10001) / 100.0;        // 2 tizedes
+
+VELETLEN MODOSITAS +-10%-ON BELUL (pl. a kert mennyiseg)
+    Random rnd = new Random();
+    int gramm = 300;
+    double szorzo = 1 + rnd.Next(-100, 101) / 1000.0;   // 0,900 .. 1,100
+    int valodi = (int)Math.Round(gramm * szorzo);
+    int egyseg = (int)Math.Ceiling(valodi / 100.0);     // megkezdett 10 dkg

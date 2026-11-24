@@ -59,3 +59,32 @@ CSV BEOLVASAS  (StreamReader)                                       [ZH2]
   kezeld, ha a futas ilyenkor elszall.
   Ellenorzes beolvasas utan: lista.Count egyezik a fajl sorszamaval (fejlec
   nelkul)? Irasd ki az elso es az utolso elemet is.
+
+FAJL-CSAPDAK (nezd meg a fajl elso sorait!)
+  FEJLEC: ha az elso sor oszlopnevek -> sr.ReadLine() a ciklus elott;
+  ha mar az elso sor is adat -> NE dobd el.
+  TIZEDESVESSZO a fajlban (pl. 7,6):
+    string s = "7,6";
+    double d1 = double.Parse(s.Replace(',', '.'),
+                             CultureInfo.InvariantCulture);
+  DATUM 3 OSZLOPBAN (ev;honap;nap):
+    string[] t = "Sicario;2015;5;19".Split(';');
+    DateTime premier = new DateTime(int.Parse(t[1]), int.Parse(t[2]),
+                                    int.Parse(t[3]));
+  SZOVEG -> BOOL (kis/nagybetu-fuggetlenul, ha kell):
+    string[] t = "I;Sz;feliratos;tanacstag".Split(';');
+    bool szobeli = t[1].ToLower() == "sz";
+    bool feliratos = t[2] == "feliratos";          // "nem feliratos" -> false
+    bool tag = t[3] == "tanacstag";
+  BOOL -> SZOVEG kiirasnal:
+    bool raktaron = true;
+    Console.WriteLine(raktaron ? "van raktaron" : "nincs raktaron");
+  EKEZETEK: ha a beolvasott szovegben furcsa jelek vannak, a fajl ANSI.
+  Legegyszerubb: Jegyzettombben megnyit -> Mentes maskent -> UTF-8.
+  Vagy kodbol (.NET 6+):
+    //!nocompile
+    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+    StreamReader sr = new StreamReader("filmek.csv",
+                                       Encoding.GetEncoding(1250));
+  A konzol kiirasahoz (ha az o, u is kerdojel):
+    Console.OutputEncoding = Encoding.UTF8;

@@ -1,0 +1,59 @@
+KOZOS ZH TERKEP (a teljes anyagbol, mint a levelezos dolgozat)
+=============================================================================
+SZABALYOK
+  - mindenhol: class Program + Main, nincs lambda / LINQ, IntelliCode ki
+  - a TOMB / CIKLUS feladatokban: nincs List, nincs Sum, Min, Max, Average,
+    Contains, IndexOf, First, Last -> mindent ciklussal          (j tiltott)
+  - a FAJLOS (CSV) feladatban: List<T>, Add, RemoveAt, Clear, Sort, Reverse
+  - projektek: 01, 02, 03 ...  ellenorzott bekeres = do-while + TryParse
+
+FELADATRESZ                                          KARTYA
+-----------------------------------------------------------------------------
+1. SZELEKCIO / ARKALKULACIO           (minden eddigi ZH1-ben volt)
+  igen/nem kerdesek, egymasba agyazva            if, arkalk
+  ellenorzott: intervallum, 50-nel oszthato,     beker, arkalk
+    csak 2/3/5, csak 6 vagy 15
+  megkezdett egyseg (10 dkg, ora, GB)            math, arkalk
+  savok, kedvezmenyek egymas utan, kerekites     arkalk, math
+  hibas adatnal hibauzenet + a program leall     program
+  Random adat ([0;360), 2 tizedes, +-10%)        random, arkalk
+
+2. CIKLUS KULCSSZOIG                  (minden eddigi ZH1-ben + pot)
+  STOP / vegeztem / "-" / kovetkezo / EXIT       kulcsszo
+  kapacitas: db VAGY ertek (Wh, perc, g, GB)     kulcsszo
+  szabad hely kiirasa minden bekeres elott       kulcsszo
+  nev -> kategoria / ar tombokbol (extra)        kulcsszo
+  csak megengedett ertekek (ermek, RAM meret)    kulcsszo
+  fizetes tulfizetes nelkul                      kulcsszo
+  hh:mm, egysegek szama, vegosszeg               kulcsszo, kiir
+
+3. TOMB + RANDOM, CSOPORTOK           (minden ZH1 + pot + levelezos)
+  meret ellenorzott bekeressel, n * csop.meret   beker, tomb
+  feltoltes egesszel / 1-2 tizedes valossal      random
+  felteteles atlag, osszeg, kepletes ertek       osszegzes, math
+  van-e, mind-e, melyikbol van tobb              kereses, osszegzes
+  legnagyobb / legkisebb + hol (csoport, elem)   maximum, tomb
+  csoportonkent: atlag, max-min, mind-e, hany    csoport
+  extra: veletlen elemek modositasa korlattal    csoport
+  sajat fuggveny (pl. g -> kg)                   szamitott, fuggveny
+
+4. CSV + OSZTALY + LISTA              (minden ZH2 + pot + levelezos)
+  beolvasas: fejlec? tizedesvesszo? 3 datum-oszlop?   csv, osztaly
+  szoveg -> bool (igen/nem, Sz, feliratos)       csv
+  szamitott ertek fuggvenye (F2_, F3_, F6_, F8_) szamitott
+  idoszak / mai nap elotti szures + atlag        osszegzes, datetime
+  logikai fuggveny tobb parameterrel + kereso    kereses
+  kivalogato eljaras (Clear + gyujt) / fuggveny  kivalogatas
+  vesszos mezo (kategoriak, allergenek)          szoveglista
+  bekeres listaba "vege"-ig, fuggvenykent        szoveglista
+  torles (kis/nagybetu, ket mezo, fix azonosito) torles
+  modositas bejaras kozben                       torles
+  egyedi ertekek, rendezve / hatulrol            egyedi
+  csoportonkent max/min szuressel, (!!!) jeloles csoportlista
+  ket csoport szelsoertekenek osszevetese        maximum
+  "utolso" datum szerint (legkesobbi)            maximum
+  extra: utkozes (ugyanaz az ido es terem)       parosites
+  extra: heti menu napokra bontva, veletlennel   csoportlista
+
+RITKABB (gyakorlo feladatsorbol)
+  menus program, parhuzamos listak, szovegek     menu

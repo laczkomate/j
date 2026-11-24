@@ -1,27 +1,34 @@
 PROGRAMOZASI TETELEK - FELISMERO TABLA                 (a kartyak: C# minta)
 =============================================================================
-Feladatszoveg kulcsszava                         -> tetel           kartya
+Feladatszoveg kulcsszava                     -> tetel           kartya
 -----------------------------------------------------------------------------
-"osszesen", "osszege", "mennyi ... osszesen"     -> osszegzes       osszegzes
-"hany db", "hany ... van", "megszamolja"         -> megszamolas     osszegzes
-"atlag", "atlagosan"                             -> osszeg + db     osszegzes
-"van-e (olyan)", "letezik-e", "talalhato-e"      -> eldontes        kereses
-"minden", "mindegyik", "mind"                    -> eldontes (mind) kereses
-"melyik", "hanyadik", "hol", "keresse meg"       -> lin. kereses    kereses
+"osszesen", "osszege", "mennyi ... osszesen" -> osszegzes       osszegzes
+"hany db", "hany ... van", "megszamolja"     -> megszamolas     osszegzes
+"atlag", "atlagosan"                         -> osszeg + db     osszegzes
+"van-e (olyan)", "letezik-e", "talalhato-e"  -> eldontes        kereses
+"minden", "mindegyik", "mind"                -> eldontes (mind) kereses
+"melyik", "hanyadik", "hol", "keresse meg"   -> lin. kereses    kereses
 "legnagyobb / legkisebb / legdragabb /
  legolcsobb / legalacsonyabb / legtobb /
- elso / utolso elofordulas"                      -> max / min       maximum
-"gyujtse ki", "valogassa ki", "listaba"         -> kivalogatas     kivalogatas
-"mindegyiket csak egyszer", "kulonbozo"          -> egyedi          egyedi
-"rendezve", "hatulrol", "sorba"                  -> rendezes        rendezes
+ elso / utolso elofordulas"                  -> max / min       maximum
+"gyujtse ki", "valogassa ki", "listaba"      -> kivalogatas     kivalogatas
+"mindegyiket csak egyszer", "kulonbozo"      -> egyedi          egyedi
+"rendezve", "hatulrol", "sorba"              -> rendezes        rendezes
 "...-nkent": kategoriankent, varosonkent,
- gyartonkent, emeletenkent, csoportonkent        -> csoport         csoport
+ gyartonkent, emeletenkent, csoportonkent    -> csoport         csoport
 "ugyanabban az idopontban", "utkozes",
- "barmely ket ..."                               -> paros osszeh.   parosites
+ "barmely ket ..."                           -> paros osszeh.   parosites
 "amig", "STOP", "vegeztem", "kovetkezo",
- "folyamatosan kerje be"                         -> kulcsszoig      kulcsszo
-"torolje a listabol"                             -> keres + torles  torles
-"kedvezmeny", "sav", "megkezdett", "ar"          -> szelekcio       arkalk
+ "folyamatosan kerje be"                     -> kulcsszoig      kulcsszo
+"torolje a listabol"                         -> keres + torles  torles
+"kedvezmenyes ar", "telitettseg", "teljes adag",
+ "szamitsa ki egy adott ...-ra" (fuggveny)   -> szamitott ert.  szamitott
+"vesszovel elvalasztva", "allergen", "kedvelt
+ kategoriak", "vege"-ig listaba              -> vesszos mezo    szoveglista
+"...-nkent" egy LISTABAN (kategoria...)      -> csoport         csoportlista
+"hibauzenet, es alljon le"                   -> return Main-bol program
+"menu", "valassza ki", "X-re kilep"          -> menu            menu
+"kedvezmeny", "sav", "megkezdett", "ar"      -> szelekcio       arkalk
 
 OSSZETETT FELADAT = TETELEK KOMBINACIOJA
   felteteles atlag         = felteteles osszegzes + megszamolas

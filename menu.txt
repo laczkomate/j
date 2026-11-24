@@ -1,0 +1,75 @@
+MENUS PROGRAM, PARHUZAMOS LISTAK, SZOVEGEK                          [orai]
+=============================================================================
+MENU: valasztas betuvel, ismetles X-ig
+    List<string> teendok = new List<string>();
+    string valasz;
+    do
+    {
+        Console.Clear();
+        Console.WriteLine("A - uj elem  S - lista  C - torles  X - kilepes");
+        Console.Write("Valasztas: ");
+        valasz = Console.ReadLine().Trim().ToUpper();
+        switch (valasz)
+        {
+            case "A":
+                Console.Write("Uj elem: ");
+                teendok.Add(Console.ReadLine());
+                break;
+            case "S":
+                for (int i = 0; i < teendok.Count; i++)
+                    Console.WriteLine($"{i + 1}. {teendok[i]}");
+                Console.ReadLine();                  // var egy Enterre
+                break;
+            case "C":
+                Console.Write("Hanyadikat? ");
+                int n;
+                if (int.TryParse(Console.ReadLine(), out n) &&
+                    n >= 1 && n <= teendok.Count)
+                    teendok.RemoveAt(n - 1);
+                break;
+            case "X":
+                break;
+            default:
+                Console.WriteLine("Nincs ilyen menupont.");
+                Console.ReadLine();
+                break;
+        }
+    } while (valasz != "X");
+
+PARHUZAMOS LISTAK: osszetartozo adatok ugyanazon az indexen
+    List<string> varos = new List<string>();
+    List<int> lakos = new List<int>();
+    varos.Add("Eger");
+    lakos.Add(52000);
+    for (int i = 0; i < varos.Count; i++)
+        if (lakos[i] > 100000)
+            Console.WriteLine(varos[i]);
+
+SZOVEGEK: leghosszabb, legrovidebb, adott betuvel kezdodo, hosszak atlaga
+    string[] v = { "Eger", "Miskolc", "Esztergom", "Pecs" };
+    int hosszu = 0;
+    int rovid = 0;
+    int eDb = 0;
+    int hosszOssz = 0;
+    for (int i = 0; i < v.Length; i++)
+    {
+        if (v[i].Length > v[hosszu].Length) hosszu = i;
+        if (v[i].Length < v[rovid].Length) rovid = i;
+        if (v[i].StartsWith("E")) eDb++;
+        hosszOssz += v[i].Length;
+    }
+    Console.WriteLine($"Leghosszabb: {v[hosszu]}, legrovidebb: {v[rovid]}");
+    Console.WriteLine($"E-vel kezdodik: {eDb}, " +
+                      $"atlagos hossz: {(double)hosszOssz / v.Length:F2}");
+
+SULYOZOTT ATLAG: osszeg(ertek * suly) / osszeg(suly)
+    double[] ertek = { 5, 3, 4 };
+    double[] suly = { 0.5, 0.2, 0.3 };
+    double szamlalo = 0;
+    double nevezo = 0;
+    for (int i = 0; i < ertek.Length; i++)
+    {
+        szamlalo += ertek[i] * suly[i];
+        nevezo += suly[i];
+    }
+    Console.WriteLine($"Sulyozott atlag: {szamlalo / nevezo:F2}");

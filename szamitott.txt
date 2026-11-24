@@ -1,0 +1,106 @@
+SZAMITOTT ERTEK FUGGVENYKENT (objektumbol)                          [ZH1+2]
+=============================================================================
+A peldak osztalya (a sajat feladatodnal a mezok mas nevuek lesznek):
+    class Aru
+    {
+        public string nev;
+        public string tipus;          // pl. "tej" / "et", "HDD" / "SSD"
+        public string allapot;        // pl. "ujszeru", "serult"
+        public string klima;          // pl. "nincs", "manualis"
+        public int ar;
+        public int keszlet;
+        public int maxKeszlet;
+        public int elemek;
+        public int tomeg;             // gramm
+        public int kcal100;           // energia 100 g-ra
+        public int evjarat;
+        public bool kiallitasi;
+        public DateTime lejarat;
+    }
+
+SZAZALEK (telitettseg), TELJES ADAG, ATLAG EGY ELEMRE, MERTEKEGYSEG
+    static int F2_Telitettseg(Aru a)
+    {
+        return (int)Math.Round(100.0 * a.keszlet / a.maxKeszlet);
+    }
+    static int F2_TeljesEnergia(Aru a)          // a kcal 100 g-ra van megadva
+    {
+        return a.tomeg * a.kcal100 / 100;
+    }
+    static double F2_ElemAr(Aru a)              // egesz kell? a.ar / a.elemek
+    {
+        return (double)a.ar / a.elemek;
+    }
+    static double Kg(int gramm)
+    {
+        return gramm / 1000.0;                  // 1000.0! (int/int csonkol)
+    }
+
+KEDVEZMENYEK, EGYMASTOL FUGGETLEN FELTETELEK (mind teljesulhet)
+    static int F3_KedvezmenyesAr(Aru a)
+    {
+        double ar = a.ar;
+        if (a.lejarat < new DateTime(2022, 10, 1))
+            ar = ar * 0.75;                       // -25%
+        if (a.tipus == "HDD" || a.tipus == "SSHD")
+            ar = ar - 12000;                      // fix osszeg
+        if (a.kiallitasi)
+            ar = ar * 0.85;                       // -15%
+        return (int)Math.Round(ar);               // nincs kedvezmeny: eredeti
+    }
+
+ELOSZOR KIZARO FELTETEL, UTANA SZAZALEKOK
+    static int F6_AkciosAr(Aru a)
+    {
+        if (a.lejarat < DateTime.Today)
+            return 0;                             // lejart: 0 Ft
+        double ar = a.ar;
+        if (a.tipus == "tej")
+            ar = ar * 0.75;
+        else
+            ar = ar * 0.70;
+        if (a.keszlet >= 60)
+            ar = ar * 0.94;                       // tovabbi -6%
+        return (int)Math.Round(ar);
+    }
+
+TABLAZATBOL ERTEK + HATVANY (amortizacio evente)
+    static int F8_BecsultAr(Aru a)
+    {
+        double amort;
+        switch (a.allapot)
+        {
+            case "ujszeru": amort = 0.11; break;
+            case "megkimelt": amort = 0.20; break;
+            case "serult": amort = 0.35; break;
+            default: amort = 0.42; break;
+        }
+        int felar = 0;
+        if (a.klima == "manualis") felar = 120000;
+        else if (a.klima == "digitalis") felar = 245000;
+        else if (a.klima == "digitalis-tobbzonas") felar = 320000;
+        int kor = DateTime.Today.Year - a.evjarat;
+        double ar = a.ar * Math.Pow(1 - amort, kor) + felar;
+        return (int)Math.Round(ar);
+    }
+
+KEPLET TOMBELEMRE (ZH1): (450000 + m^4) / 1000, ha m > 95
+    double[] t = { 96.5, 80.0, 99.1 };
+    double ossz = 0;
+    for (int i = 0; i < t.Length; i++)
+        if (t[i] > 95)
+            ossz += (450000 + Math.Pow(t[i], 4)) / 1000;
+    Console.WriteLine($"Osszertek: {ossz:F2}");
+
+HASZNALAT: szures es kiiras a fuggvennyel, csoportonkenti max ra
+    List<Aru> lista = new List<Aru>();
+    foreach (Aru a in lista)
+        if (F2_TeljesEnergia(a) > 700)
+            Console.WriteLine($"{a.nev} - {F2_TeljesEnergia(a)} kcal, " +
+                              $"{a.ar} Ft, akcios: {F6_AkciosAr(a)} Ft");
+    int idx = -1;
+    for (int i = 0; i < lista.Count; i++)
+        if (!lista[i].kiallitasi)
+            if (idx == -1 || F3_KedvezmenyesAr(lista[i]) >
+                             F3_KedvezmenyesAr(lista[idx]))
+                idx = i;

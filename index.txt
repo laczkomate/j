@@ -1,14 +1,13 @@
 MP1 JEGYZET-KARTYAK                     hasznalat:   j <nev>     pl. j switch
 =============================================================================
-Jeloles:  [ZH1+2]    mindket ZH-n szabad      [csak ZH2]  ZH1-ben TILOS
+Jeloles:  [ZH1+2]    minden feladatban       [csak ZH2]  csak a CSV-sben
           [TILOS]    sehol sem szabad         [orai]      oran volt, ritkabb
 Szintaxis-kartyak: C# reszletek, feladattol fuggetlen peldakkal.
 Tetel-kartyak: kesz C# mintak semleges peldan (int[] t, class Termek).
 
 KERETEK
   gyakorlas    hogyan hasznald ezeket (4 kerdes, lepcso, idore)
-  zh1          ZH1 terkep: 3 feladat, mit kernek, melyik kartya kell
-  zh2          ZH2 terkep: tipikus feladatsor, melyik tetel hova
+  zh           KOZOS ZH TERKEP: feladatresz -> melyik kartya kell
   forma        formai keretek (Main, mappa, F2_ prefixum, bekeres)
   tiltott      mi tilos ZH1 / ZH2-ben, mit irj helyette
   ellenorzo    beadas elotti kerdesek (buktatok)
@@ -41,7 +40,11 @@ TETELEK (C# mintak)
   kivalogatas  kivalogatas (fuggveny es eljaras)
   egyedi       egyedi ertekek kigyujtese
   rendezes     rendezes (beepitett es kezi)
-  csoport      csoportonkenti feldolgozas (tomb es lista)
+  csoport      csoportonkent tombben (sorfolytonos), veletlen modositas
+  csoportlista csoportonkent listaban, (!!!) jeloles, heti menu
+  szamitott    objektumbol szamolt ertek: kedvezmeny, %, keplet
+  szoveglista  vesszos mezo (allergenek), bekeres listaba, szures
+  menu         menus program, parhuzamos listak, szovegek
   parosites    paros osszehasonlitas (utkozes)
   kulcsszo     kulcsszoig tarto bekeres, tobb leallasi feltetel
   torles       torles es modositas listaban

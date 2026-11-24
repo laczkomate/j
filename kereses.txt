@@ -65,3 +65,30 @@ LOGIKAI FUGGVENY TOBB FELTETELLEL + RA EPULO KERESO
         if (talalat == 0)
             Console.WriteLine("Nincs megfelelo termek.");
     }
+
+VAN-E ILYEN, KET PARAMETER SZERINT (F3_ / F4_ tipus) + KERESO
+    static bool F3_VanIlyen(List<Termek> lista, string kategoria, bool akc)
+    {
+        foreach (Termek x in lista)
+            if (x.kategoria.ToLower() == kategoria.Trim().ToLower() &&
+                x.akcios == akc)
+                return true;
+        return false;
+    }
+    static void Vasarlo(List<Termek> lista)
+    {
+        Console.Write("Kategoria: ");
+        string kat = Console.ReadLine();
+        Console.Write("Akcios legyen? (igen/nem): ");
+        bool akc = Console.ReadLine().Trim().ToLower() == "igen";
+        if (!F3_VanIlyen(lista, kat, akc))
+        {
+            Console.WriteLine("Nincs ilyen termek.");
+            return;
+        }
+        foreach (Termek x in lista)
+            if (x.kategoria.ToLower() == kat.Trim().ToLower() &&
+                x.akcios == akc)
+                Console.WriteLine($"{x.nev}, {x.ar} Ft");
+    }
+  Elso betu alapjan (pl. kod "NBT_IM7" -> nappali):  x.nev[0] == 'N'

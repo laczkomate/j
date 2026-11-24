@@ -69,3 +69,70 @@ KATEGORIAK SZAMLALASA TOMBBEN (extra)
 PERCBOL hh:mm
     int perc = 135;
     Console.WriteLine($"{perc / 60:D2}:{perc % 60:D2}");      // 02:15
+
+NEV -> KATEGORIA TOMBOKBOL (pizzafeltet, szenzor, bonbon, foglalkozas)
+    string[] kat1 = { "sonka", "kukorica", "gomba" };
+    string[] kat2 = { "kolbasz", "ananasz", "jalapeno" };
+    string[] kat3 = { "kagylo", "articsoka", "oliva" };
+    int[] katAr = { 200, 250, 300 };
+    string be = "ananasz";
+    int kat = -1;                                  // -1: nincs ilyen
+    for (int i = 0; i < kat1.Length; i++) if (kat1[i] == be) kat = 0;
+    for (int i = 0; i < kat2.Length; i++) if (kat2[i] == be) kat = 1;
+    for (int i = 0; i < kat3.Length; i++) if (kat3[i] == be) kat = 2;
+    if (kat != -1)
+        Console.WriteLine($"{be}: {kat + 1}. kategoria, {katAr[kat]} Ft");
+    else
+        Console.WriteLine("Nincs ilyen.");
+
+KAPACITAS KET FELTETELLEL + SZABAD HELY KIIRASA MINDEN BEKERES ELOTT
+    const int MAXDB = 10;
+    const int MAXWH = 1000;
+    int db = 0, wh = 0, resz = 1, osszDb = 0, osszWh = 0;
+    while (true)
+    {
+        Console.WriteLine($"{resz}. resz: szabad {MAXDB - db} db, " +
+                          $"{MAXWH - wh} Wh");
+        Console.Write("Szenzor fogyasztasa (Wh) / uj / STOP: ");
+        string s = Console.ReadLine().Trim();
+        if (s.ToUpper() == "STOP")
+            break;
+        if (s.ToLower() == "uj")
+        {
+            resz++; db = 0; wh = 0;
+            continue;
+        }
+        int e = int.Parse(s);
+        if (db == MAXDB || wh + e > MAXWH)       // nem fer el: uj resz
+        {
+            resz++; db = 0; wh = 0;
+        }
+        db++; wh += e; osszDb++; osszWh += e;
+    }
+    Console.WriteLine($"{osszDb} szenzor, {resz} reszben, {osszWh} Wh");
+  "Ha mar SEMMI nem fer el": a szabad hely kisebb, mint a legkisebb elem
+  (pl. 240 perces nap, a legrovidebb foglalkozas 45 perc):
+    int szabad = 30;
+    int legrovidebb = 45;
+    if (szabad < legrovidebb) { szabad = 240; }
+
+CSAK MEGENGEDETT ERTEKEK TOMBBOL + FIZETES TULFIZETES NELKUL
+    int[] ermek = { 10, 20, 50, 100, 200 };
+    int hatra = 370;
+    while (hatra > 0)
+    {
+        Console.Write($"Meg fizetendo: {hatra}. Penz: ");
+        int e;
+        bool szam = int.TryParse(Console.ReadLine(), out e);
+        bool ervenyes = false;
+        for (int i = 0; i < ermek.Length; i++)
+            if (szam && ermek[i] == e)
+                ervenyes = true;
+        if (!ervenyes)
+            Console.WriteLine("Nincs ilyen cimlet!");
+        else if (e > hatra)
+            Console.WriteLine("Tulfizetes, nem fogadom el!");
+        else
+            hatra -= e;
+    }
+    Console.WriteLine("Az osszeg kifizetve.");

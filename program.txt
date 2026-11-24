@@ -47,3 +47,16 @@ PROGRAM VAZ, VALTOZOK, HATOKOR                                      [ZH1+2]
 
   Megjegyzes: // egy sor     /* tobb sor */
   Sarga figyelmeztetes (warning) nem hiba; a piros (error) az.
+
+PROGRAM LEALLITASA HIBAS ADATNAL (a Main-ben: return;)
+    Console.Write("Brutto ber: ");
+    int ber = int.Parse(Console.ReadLine());
+    if (ber < 2100)
+    {
+        Console.WriteLine("Hiba: a minimalber alatt van!");
+        Console.WriteLine("Nyomj Entert a kilepeshez...");
+        Console.ReadLine();             // "Enter lenyomasa utan alljon le"
+        return;                         // a Main vege: a program leall
+    }
+    Console.WriteLine("Folytatodik...");
+  Mas metodusbol: Environment.Exit(0);   (az egesz program leall)

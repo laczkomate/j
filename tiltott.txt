@@ -7,14 +7,14 @@ MINDEN ZH-BAN
   x lambdas listametodusok: Find, FindAll, Exists, RemoveAll, Sort(x => ..)
   x internet, orai anyag, MI, kommunikacio
 
-TOVABBA ZH1-BEN (es a levelezos dolgozat 1. feladataban)
+TOVABBA A TOMB / CIKLUS FELADATOKBAN (regi ZH1, levelezos 1. feladat)
   x List<T> (tomb alapu lista) -- csak tomb es ciklus
   x Sum()  Min()  Max()  Average()  Contains()  IndexOf()  First()  Last()
   ? Array.Sort / Array.Reverse / Array.IndexOf / string.Contains stb.:
     a kiiras csak peldakat sorol ("mint pl. ..."), minden algoritmus-jellegu
     beepitett metodus gyanus. Ha bizonytalan vagy: irj ciklust.
 
-ZH2-BEN
+A FAJLOS (CSV + LISTA) FELADATBAN
   OK:  Add  Insert  Remove  RemoveAt  Clear  Sort()  Reverse()  Count
   ?    Contains: csak ha ciklussal is meg tudnad irni
   x    Min / Max / Sum / Average jellegu muveletek: CIKLUSSAL kell

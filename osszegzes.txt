@@ -70,3 +70,16 @@ IDOSZAKRA SZURT ATLAG (datum ket hatar kozott)
         Console.WriteLine($"Atlagar: {(double)ossz / db:F2} Ft");
     else
         Console.WriteLine("Nincs adat az idoszakban.");
+
+VALOS SZAMOK EGYENLOSEGE (pl. 30,1-bol vagy 100-bol van-e tobb?)
+    double[] v = { 30.1, 100.0, 55.5, 30.1 };
+    int dbKicsi = 0;
+    int dbNagy = 0;
+    for (int i = 0; i < v.Length; i++)
+    {
+        if (Math.Abs(v[i] - 30.1) < 0.001) dbKicsi++;   // valosat ne ==-vel
+        if (Math.Abs(v[i] - 100.0) < 0.001) dbNagy++;
+    }
+    if (dbKicsi > dbNagy) Console.WriteLine("30,1%-osbol van tobb.");
+    else if (dbKicsi < dbNagy) Console.WriteLine("100%-osbol van tobb.");
+    else Console.WriteLine("Ugyanannyi van.");

@@ -42,26 +42,53 @@ VELETLEN MODOSITAS EGY CSOPORTBAN (extra)
     int j2 = rnd.Next(MERET);                 // veletlen elem benne
     t[cs2 * MERET + j2] = 0;
 
-LISTA (ZH2): kategoriankent a legolcsobb termek
-    static void LegolcsobbKategoriankent(List<Termek> lista)
+K VELETLEN ELEM NOVELESE CSOPORTONKENT, KORLATTAL, ELOTTE-UTANA ATLAG
+    const int CSOP = 3;
+    const int MERET = 30;
+    Random rnd = new Random();
+    double[] t = new double[CSOP * MERET];
+    for (int i = 0; i < t.Length; i++)
+        t[i] = rnd.Next(500, 1001) / 10.0;
+    int javult = 0;
+    for (int cs = 0; cs < CSOP; cs++)
     {
-        List<string> kat = new List<string>();     // egyedi kategoriak
-        foreach (Termek x in lista)
+        double elotte = 0;
+        for (int j = 0; j < MERET; j++)
+            elotte += t[cs * MERET + j];
+        elotte /= MERET;
+        for (int k = 0; k < 5; k++)                // 5 veletlen elem
         {
-            bool marVan = false;
-            foreach (string k in kat)
-                if (k == x.kategoria)
-                    marVan = true;
-            if (!marVan)
-                kat.Add(x.kategoria);
+            int idx = cs * MERET + rnd.Next(MERET);
+            t[idx] += rnd.Next(1, 9);              // +1..8
+            if (t[idx] > 100)
+                t[idx] = 100;                      // csokkentesnel: < 0 -> 0
         }
-        foreach (string k in kat)                  // csoportonkent minimum
-        {
-            int idx = -1;
-            for (int i = 0; i < lista.Count; i++)
-                if (lista[i].kategoria == k)
-                    if (idx == -1 || lista[i].ar < lista[idx].ar)
-                        idx = i;
-            Console.WriteLine($"{k}: {lista[idx].nev} ({lista[idx].ar} Ft)");
-        }
+        double utana = 0;
+        for (int j = 0; j < MERET; j++)
+            utana += t[cs * MERET + j];
+        utana /= MERET;
+        if (utana - elotte >= 2)
+            javult++;
     }
+    Console.WriteLine($"{javult} csoportnal javult legalabb 2-vel");
+  Ha az 5 elemnek KULONBOZONEK kell lennie: bool[] volt = new bool[MERET];
+  es addig sorsolj, amig olyat nem kapsz, ami meg nem volt.
+
+HANY CSOPORT / VAN-E CSOPORT, AHOL MIND ... (pl. mindegyik 80 felett)
+    const int MERET = 4;
+    int[] t = { 85, 90, 81, 99, 50, 95, 88, 91 };
+    int csopDb = t.Length / MERET;
+    int joCsop = 0;
+    for (int cs = 0; cs < csopDb; cs++)
+    {
+        bool mind = true;
+        for (int j = 0; j < MERET && mind; j++)
+            if (t[cs * MERET + j] <= 80)
+                mind = false;
+        if (mind)
+            joCsop++;
+    }
+    if (joCsop > 0)
+        Console.WriteLine($"Van ilyen csoport ({joCsop} db).");
+    else
+        Console.WriteLine("Nincs ilyen csoport.");

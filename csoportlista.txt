@@ -1,0 +1,128 @@
+CSOPORTONKENT LISTABAN (kategoriankent, gyartonkent, tantargyankent) [ZH2]
+=============================================================================
+Termek: nev, kategoria, cimkek (string); ar, keszlet, tomeg (int);
+  akcios (bool); datum (DateTime)
+Menete: 1) egyedi csoportnevek listaja  2) minden csoportra kulon ciklus.
+
+EGYEDI KATEGORIAK (a ZH-ban ez a kulon F7_ fuggveny)
+    static List<string> Kategoriak(List<Termek> lista)
+    {
+        List<string> kat = new List<string>();
+        foreach (Termek x in lista)
+        {
+            bool marVan = false;
+            foreach (string k in kat)
+                if (k == x.kategoria)
+                    marVan = true;
+            if (!marVan)
+                kat.Add(x.kategoria);
+        }
+        kat.Sort();
+        return kat;
+    }
+
+KATEGORIANKENT LEGOLCSOBB, CSAK AKCIOS
+    static void LegolcsobbAkcios(List<Termek> lista)
+    {
+        List<string> kat = Kategoriak(lista);
+        foreach (string k in kat)
+        {
+            int idx = -1;
+            for (int i = 0; i < lista.Count; i++)
+                if (lista[i].kategoria == k && lista[i].akcios)
+                    if (idx == -1 || lista[i].ar < lista[idx].ar)
+                        idx = i;
+            if (idx != -1)
+                Console.WriteLine($"{k}: {lista[idx].nev} {lista[idx].ar}");
+            else
+                Console.WriteLine($"{k}: nincs akcios termek");
+        }
+    }
+
+LEGDRAGABB SZURESSEL + JELOLES, HA KEVES ELEM VAN A CSOPORTBAN: (!!!)
+    static void Statisztika(List<Termek> lista)
+    {
+        foreach (string k in Kategoriak(lista))
+        {
+            int idx = -1;
+            int db = 0;
+            for (int i = 0; i < lista.Count; i++)
+            {
+                if (lista[i].kategoria == k)
+                {
+                    db++;                               // minden elem szamit
+                    if (lista[i].keszlet >= 10)         // a max csak szurve
+                        if (idx == -1 || lista[i].ar > lista[idx].ar)
+                            idx = i;
+                }
+            }
+            string jel = db < 3 ? " (!!!)" : "";
+            if (idx != -1)
+                Console.WriteLine($"{k}: {lista[idx].nev}, " +
+                                  $"{lista[idx].ar} Ft{jel}");
+        }
+    }
+
+CSOPORT LEGNAGYOBB ELEMEBOL SZAMOLT ERTEK (pl. bevetel = ar * keszlet)
+    static void BevetelGyartonkent(List<Termek> lista)
+    {
+        foreach (string k in Kategoriak(lista))
+        {
+            int idx = -1;
+            for (int i = 0; i < lista.Count; i++)
+                if (lista[i].kategoria == k)
+                    if (idx == -1 || lista[i].ar > lista[idx].ar)
+                        idx = i;
+            int bevetel = lista[idx].ar * lista[idx].keszlet;
+            Console.WriteLine($"{k}: {lista[idx].nev}, {bevetel} Ft");
+        }
+    }
+
+NAPOKRA BONTVA (heti menu): naponta a legolcsobb a megadott kategoriakbol
+    static void HetiMenu(List<Termek> lista)
+    {
+        string[] napNev = { "Vasarnap", "Hetfo", "Kedd", "Szerda",
+                            "Csutortok", "Pentek", "Szombat" };
+        string[] valaszthato = { "salata", "rantott", "fozelek" };
+        Random r = new Random();
+        List<DateTime> napok = new List<DateTime>();     // egyedi napok
+        foreach (Termek x in lista)
+        {
+            bool marVan = false;
+            foreach (DateTime d in napok)
+                if (d == x.datum.Date)
+                    marVan = true;
+            if (!marVan)
+                napok.Add(x.datum.Date);
+        }
+        napok.Sort();
+        int heti = 0;
+        foreach (DateTime nap in napok)
+        {
+            string[] kell = { "leves", valaszthato[r.Next(3)], "desszert" };
+            int[] valasztott = new int[kell.Length];
+            int napi = 0;
+            for (int k = 0; k < kell.Length; k++)
+            {
+                int idx = -1;
+                for (int i = 0; i < lista.Count; i++)
+                    if (lista[i].datum.Date == nap &&
+                        lista[i].kategoria == kell[k])
+                        if (idx == -1 || lista[i].ar < lista[idx].ar)
+                            idx = i;
+                valasztott[k] = idx;
+                if (idx != -1)
+                    napi += lista[idx].ar;
+            }
+            Console.WriteLine($"{napNev[(int)nap.DayOfWeek]} ({napi} Ft)");
+            for (int k = 0; k < kell.Length; k++)
+                if (valasztott[k] != -1)
+                {
+                    Termek v = lista[valasztott[k]];
+                    Console.WriteLine($"  {kell[k]}: {v.nev} - {v.ar} Ft");
+                }
+            heti += napi;
+        }
+        Console.WriteLine($"A heti menu teljes ara {heti} Ft.");
+    }
+  A napi osszeg a fejlecben van, ezert elobb szamolj, utana irj ki.
