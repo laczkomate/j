@@ -1,29 +1,54 @@
-EGYEDI ERTEKEK KIGYUJTESE                                (pszeudokod, nem C#)
+EGYEDI ERTEKEK KIGYUJTESE (+ rendezve, forditva, darabszammal)      [ZH1+2]
 =============================================================================
-Felismeres: "mindegyiket csak egyszer", "kulonbozo", "gyujtse ki a
-            kategoriakat / tantargyak / gyartok nevet"
-Bemenet: lista (objektumokkal)   Kimenet: szoveges lista, ismetlodes nelkul
-   [ZH2: listaval; a szoveges listaval visszatero fuggveny (F7_) tipikus]
+Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
 
-   egyedi = uj szoveges lista
-   ciklus a forras minden elemere:
-      ertek = elem.mezo
-      van = hamis
-      ciklus j az egyedi listan:
-          ha (egyedi[j] == ertek) { van = igaz;  kilep }
-      ha (NEM van)  egyedi.Add(ertek)
-   visszater egyedi
-   - a belso ciklus = eldontes tetel (j kereses); ugyanez a Contains-szel
-     csak akkor szabad, ha a ciklussal is meg tudod irni
+LISTA (ZH2): kategoriak, mindegyik egyszer
+    static List<string> Kategoriak(List<Termek> lista)
+    {
+        List<string> egyedi = new List<string>();
+        foreach (Termek x in lista)
+        {
+            bool marVan = false;
+            for (int i = 0; i < egyedi.Count && !marVan; i++)
+                if (egyedi[i] == x.kategoria)
+                    marVan = true;
+            if (!marVan)
+                egyedi.Add(x.kategoria);
+        }
+        return egyedi;
+    }
+  (A belso for helyett: if (!egyedi.Contains(x.kategoria)) - csak ZH2-ben,
+  es csak ha szabad.)
 
-RENDEZVE: a gyujtes UTAN  egyedi.Sort()            (abc szerint novekvo)
-HATULROL / FORDITOTT SORRENDBEN: egyedi.Sort() majd egyedi.Reverse()
+RENDEZVE / FORDITOTT SORRENDBEN / DARABSZAMMAL
+    List<Termek> lista = new List<Termek>();
+    List<string> kat = Kategoriak(lista);
+    kat.Sort();                       // abc szerint
+    kat.Reverse();                    // forditott (Sort utan: Z -> A)
+    foreach (string k in kat)
+    {
+        int db = 0;
+        foreach (Termek x in lista)
+            if (x.kategoria == k)
+                db++;
+        Console.WriteLine($"{k}: {db} db");
+    }
 
-Kerdezd meg magad:
-  - a kis/nagybetu szamit? ("Leves" es "leves" ugyanaz?) -> Trim, ToLower
-  - van-e felesleges szokoz a szoveg szelen?
-  - hol hasznaljuk fel? Altalaban ezekbol a listabol indul a CSOPORTONKENTI
-    feldolgozas (j csoport): minden egyedi ertekre egy kor.
-  - ures forras: ures az eredmeny is
-Forras: ZH2 2023/24 7., 2024/25 7. feladat (F7_), 2022/23 7. feladat;
-        LEV_TAV 2025/26 2.7 (rendezve adja vissza).
+TOMB (ZH1): egyedi szamok egy masik tombbe
+    int[] t = { 4, -2, 7, 7, 1, 4 };
+    int[] egyedi = new int[t.Length];      // legfeljebb ennyi lehet
+    int db = 0;                            // ennyi van tenylegesen
+    for (int i = 0; i < t.Length; i++)
+    {
+        bool marVan = false;
+        for (int j = 0; j < db; j++)
+            if (egyedi[j] == t[i])
+                marVan = true;
+        if (!marVan)
+        {
+            egyedi[db] = t[i];
+            db++;
+        }
+    }
+    for (int i = 0; i < db; i++)           // NEM egyedi.Length-ig!
+        Console.Write(egyedi[i] + " ");    // 4 -2 7 1

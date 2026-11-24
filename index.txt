@@ -3,7 +3,7 @@ MP1 JEGYZET-KARTYAK                     hasznalat:   j <nev>     pl. j switch
 Jeloles:  [ZH1+2]    mindket ZH-n szabad      [csak ZH2]  ZH1-ben TILOS
           [TILOS]    sehol sem szabad         [orai]      oran volt, ritkabb
 Szintaxis-kartyak: C# reszletek, feladattol fuggetlen peldakkal.
-Tetel-kartyak: PSZEUDOKOD, szandekosan nem C#: a C# atirast te tanuld meg!
+Tetel-kartyak: kesz C# mintak semleges peldan (int[] t, class Termek).
 
 KERETEK
   gyakorlas    hogyan hasznald ezeket (4 kerdes, lepcso, idore)
@@ -33,7 +33,7 @@ SZINTAXIS (C#)
   osztaly      class, struct, enum, ertek vs referencia
   csv          StreamReader, Split, beolvasas lepesei         [ZH2]
 
-TETELEK (pszeudokod)
+TETELEK (C# mintak)
   tetelek      FELISMERO TABLA: feladatszoveg -> melyik tetel
   osszegzes    osszegzes, megszamolas, atlag (felteteles is)
   kereses      eldontes (van-e / mind-e), kivalasztas, lin. kereses

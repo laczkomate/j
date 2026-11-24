@@ -1,34 +1,41 @@
-TORLES ES MODOSITAS LISTABAN                       (ZH2)  [pszeudokod]
+TORLES ES MODOSITAS LISTABAN                                    [csak ZH2]
 =============================================================================
-Felismeres: "torolje a listabol", "modositsa minden ...", "kezelje, ha a
-            felhasznalo nem csak nagybetut hasznal"
+Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
 
-TORLES EGY ELEMRE (kereses + RemoveAt)
-   1) bekert kulcs (pl. rendszam)  ->  kulcs = kulcs.Trim().ToUpper()
-   2) linearis kereses: idx = -1;  ciklus i:
-         ha (lista[i].kulcs.ToUpper() == kulcs)  { idx = i;  kilep }
-   3) ha (idx == -1)  "nincs ilyen" uzenet
-      egyebkent  lista.RemoveAt(idx)
-   - kis/nagybetu fuggetlenseg: MINDKET oldalt azonos alakra hozod
-     (ToUpper vagy ToLower), a listaban talalhato ertek is lehet nem nagybetus
-   - Remove(objektum) is van, de a RemoveAt(idx) a biztos (a kereses utan)
+EGY ELEM TORLESE NEV SZERINT (kis/nagybetu-fuggetlenul)
+    static bool Torol(List<Termek> lista, string nev)
+    {
+        for (int i = 0; i < lista.Count; i++)
+        {
+            if (lista[i].nev.ToLower() == nev.Trim().ToLower())
+            {
+                lista.RemoveAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
 
-TORLES TOBB ELEMRE
-   - foreach kozben TILOS torolni (InvalidOperationException)
-   - for ciklussal VISSZAFELE:  i = Count-1 .. 0:  ha (feltetel) RemoveAt(i)
-     (elore menve a torles utan az elemek eltolodnak, kimarad egy)
-   - vagy: uj listaba kivalogatod a MARADOKOT (j kivalogatas), azt hasznalod
+HIVAS FELHASZNALOI BEKERESSEL
+    List<Termek> lista = new List<Termek>();
+    Console.Write("Torlendo termek neve: ");
+    string mit = Console.ReadLine();
+    if (Torol(lista, mit))
+        Console.WriteLine("Torolve.");
+    else
+        Console.WriteLine("Nincs ilyen termek.");
 
-MODOSITAS BEJARAS KOZBEN
-   - foreach-ben az OBJEKTUM MEZOJE modosithato (referencia):
-        ciklus minden objektumra:
-           ha (feltetel) { obj.ram = 8;  obj.ar = obj.ar + 3000 }
-   - ertektipusu elem (pl. List<int>) NEM modosithato foreach-ben: for + index
-   - tomb elemenel mindig for + index
+TOBB ELEM TORLESE: HATULROL ELORE (elore haladva kihagyna elemeket)
+    List<Termek> lista = new List<Termek>();
+    for (int i = lista.Count - 1; i >= 0; i--)
+        if (lista[i].ar > 1000)
+            lista.RemoveAt(i);
 
-Kerdezd meg magad:
-  - mi van, ha tobb egyezo elem van? az elsot toroljuk? mindet?
-  - torles utan ellenorzod a Count-ot, kiirsz uzenetet?
-  - a modositas minden elemre vagy csak a feltetelre vonatkozik?
-  - az uzenet (nincs ilyen) szerepel-e a mintaban?
-Forras: ZH2 minta01 7. feladat, minta02 8. feladat, ZH2 2022/23 6. feladat.
+MODOSITAS BEJARAS KOZBEN (objektum mezoje foreach-ben is modosithato)
+    List<Termek> lista = new List<Termek>();
+    foreach (Termek x in lista)
+    {
+        if (x.akcios)
+            x.ar = (int)Math.Round(x.ar * 0.9);     // 10% kedvezmeny
+    }
+  foreach-ben NEM lehet: x = new Termek(); es lista.Add / RemoveAt.

@@ -1,34 +1,67 @@
-ELDONTES / KIVALASZTAS / LINEARIS KERESES               (pszeudokod, nem C#)
+ELDONTES, KIVALASZTAS, LINEARIS KERESES                             [ZH1+2]
 =============================================================================
-ELDONTES: "van-e olyan elem, amelyre igaz a feltetel?"
-   van = hamis
-   ciklus minden elemre:  ha (feltetel(elem)) { van = igaz;  kilep (break) }
-   kiir: van ? "van ilyen" : "nincs ilyen"
-   - a "kilep" elhagyhato (csak gyorsabb); a van = igaz ne irodjon felul
-MIND-E: "igaz-e MINDEN elemre a feltetel?"
-   mind = igaz
-   ciklus minden elemre:  ha (NEM feltetel(elem)) { mind = hamis;  kilep }
-   - ez a "van-e olyan, amelyre NEM igaz" tagadasa
-   - ures sorozatnal a mind = igaz (kerdes: ezt akarom?)
-LINEARIS KERESES: "melyik indexen van az elso olyan elem, amely ...?"
-   idx = -1
-   i = 0
-   amig (i < n ES idx == -1):   ha (feltetel(elem[i])) idx = i;   i = i + 1
-   ha (idx == -1) "nincs talalat"   egyebkent kiir (idx, elem[idx])
-   - kulcs: az elso talalat utan megall; a -1 = "nincs" jel
-   - szoveges egyezes: elobb Trim + ToLower mindket oldalon (j string)
-KIVALASZTAS: ha BIZTOSAN van talalat (nincs "nincs" ag)
-   i = 0;   amig (NEM feltetel(elem[i]))  i = i + 1;   ... elem[i]
-FELHASZNALOI KERESO (ZH2 jellegu): bekert ertekek -> logikai fuggveny hivasa
-   a lista elemein; talalat: kiiras a minta szerint; ha egy sincs: uzenet
-   (kell egy bool "volt-e talalat" jelzo a kiiratas melle)
-CSOPORTONKENT eldontes: "van-e olyan csoport, ahol minden elem ...":
-   van = hamis
-   ciklus csoportokra:
-      mind = igaz
-      ciklus a csoport elemein:  ha (NEM feltetel) { mind = hamis; kilep }
-      ha (mind)  van = igaz
-Kerdezd meg magad: ures lista? tobb talalat - melyik kell (elso/osszes)?
-  Kis/nagybetu? a feltetel vegyes (&&, ||): zarojelezve van?
-Forras: Feladatgyujtemeny 5.2 h) i);  ZH1 2024/25 3d, 3e/b; 2025/26 3f/ii;
-        ZH2 5. feladat (F5_ logikai fuggveny + felhasznaloi kereso).
+Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
+
+TOMB (ZH1)
+    int[] t = { 4, -2, 7, 7, 1 };
+    // VAN-E negativ? (eldontes)
+    bool van = false;
+    for (int i = 0; i < t.Length && !van; i++)
+        if (t[i] < 0)
+            van = true;
+    // MIND pozitiv? (= nincs ellenpelda)
+    bool mind = true;
+    for (int i = 0; i < t.Length && mind; i++)
+        if (t[i] <= 0)
+            mind = false;
+    // HOL az elso 7-es? (linearis kereses, -1 ha nincs)
+    int idx = -1;
+    int j = 0;
+    while (j < t.Length && idx == -1)
+    {
+        if (t[j] == 7)
+            idx = j;
+        j++;
+    }
+    if (idx != -1)
+        Console.WriteLine($"Az elso 7-es indexe: {idx}");
+    else
+        Console.WriteLine("Nincs 7-es.");
+
+KIVALASZTAS (biztosan van ilyen elem, nem kell hatar-ellenorzes)
+    int[] t = { 4, -2, 7, 7, 1 };
+    int k = 0;
+    while (t[k] != 7)
+        k++;
+    Console.WriteLine($"A 7-es indexe: {k}");
+
+LISTA (ZH2): kereses nev szerint, kis/nagybetu-fuggetlenul
+    static int KeresIdx(List<Termek> lista, string nev)
+    {
+        for (int i = 0; i < lista.Count; i++)
+            if (lista[i].nev.ToLower() == nev.Trim().ToLower())
+                return i;
+        return -1;
+    }
+
+LOGIKAI FUGGVENY TOBB FELTETELLEL + RA EPULO KERESO
+    static bool Megfelel(Termek x, int maxAr)
+    {
+        return x.akcios && x.ar <= maxAr && x.kategoria != "pekaru";
+    }
+    static void Kereso(List<Termek> lista)
+    {
+        Console.Write("Legfeljebb mennyi lehet az ar? ");
+        int maxAr = int.Parse(Console.ReadLine());
+        int talalat = 0;
+        foreach (Termek x in lista)
+        {
+            if (Megfelel(x, maxAr))
+            {
+                Console.WriteLine($"{x.nev} - {x.ar} Ft");
+                talalat++;
+            }
+        }
+        if (talalat == 0)
+            Console.WriteLine("Nincs megfelelo termek.");
+    }

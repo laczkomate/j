@@ -1,35 +1,57 @@
-KIVALOGATAS                                              (pszeudokod, nem C#)
+KIVALOGATAS                                                         [ZH1+2]
 =============================================================================
-Felismeres: "gyujtse ki", "valogassa ki", "listaba", "azokat a ..., amelyek"
-Bemenet: forras (tomb / lista)     Kimenet: a feltetelnek megfelelo elemek
+Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
 
-A) FUGGVENYKENT, uj lista a visszateresi ertek
-   eredmeny = uj lista
-   ciklus minden elemre:  ha (feltetel(elem))  eredmeny.Add(elem)
-   visszater eredmeny
-   - visszateresi tipus: List<elemtipus>
+FUGGVENY: uj listaval ter vissza (ZH2)
+    static List<Termek> Akciosak(List<Termek> lista)
+    {
+        List<Termek> eredmeny = new List<Termek>();
+        foreach (Termek x in lista)
+            if (x.akcios)
+                eredmeny.Add(x);
+        return eredmeny;
+    }
 
-B) ELJARASKENT (void) a PARAMETERBEN kapott cel listaba  [ZH2-ben gyakori]
-   cel.Clear()                  <- ELSO lepes: urits! (kulonben a regi marad)
-   ciklus a forras elemein:  ha (feltetel(elem))  cel.Add(elem)
-   - nincs return: a cel lista referencia, a hivonal is valtozik
-   - a forras es a cel KET kulon lista legyen (ne ugyanaz mindketto)
-   - a paramerek sorrendje es neve a kiiras szerint (forras, cel, szuro-ertek)
+ELJARAS: a parameterben kapott cel listaba gyujt (ZH2-ben gyakori)
+    static void Valogat(List<Termek> forras, List<Termek> cel, int maxAr)
+    {
+        cel.Clear();                         // ELOSZOR uriteni!
+        foreach (Termek x in forras)
+            if (x.ar <= maxAr)
+                cel.Add(x);
+    }
 
-C) TOMBBOL (ZH1: lista tilos!)
-   elore nem tudod, hany elem lesz. Ket lehetoseg:
-   1) megszamolod (j osszegzes), azutan db meretu tombot foglalsz, majd
-      masodik ciklussal toltod
-   2) az indexeket gyujtod: idx = uj tomb (n meretu);  db = 0;
-      ha (feltetel) { idx[db] = i;  db = db + 1 }
-      a kivalogatott elemek: elem[idx[0]] .. elem[idx[db-1]]
+HIVAS + KIIRAS
+    List<Termek> lista = new List<Termek>();
+    List<Termek> olcsok = new List<Termek>();
+    Valogat(lista, olcsok, 500);
+    if (olcsok.Count == 0)
+        Console.WriteLine("Nincs ilyen termek.");
+    foreach (Termek x in olcsok)
+        Console.WriteLine($"{x.nev,-15}{x.ar,6} Ft");
 
-Utana jellemzoen: kiiras a minta szerint a kivalogatott listan; atlag ujra
-az osszegzes tetellel a kivalogatott listan (j osszegzes).
+IDOSZAKRA (datum szerint)
+    List<Termek> lista = new List<Termek>();
+    List<Termek> decemberi = new List<Termek>();
+    foreach (Termek x in lista)
+        if (x.datum.Year == 2024 && x.datum.Month == 12)
+            decemberi.Add(x);
 
-Kerdezd meg magad:
-  - a cel lista uresen indul? (Clear)   - a feltetel zart / nyilt hatar?
-  - ha nincs talalat: ures a lista; a kiiras es az atlag ilyenkor mit csinal?
-  - a kivalogatott elemek sorrendje a forras sorrendje (ez a normal)
-Forras: 06_Tomb_Lista 26. dia (kivalogatas); ZH2 6. feladat (F5_ eljaras),
-        POT 2022/23 3.3 (fuggvenyes valtozat), ZH1: tomb + indexek.
+TOMBBOL TOMBBE (ZH1, lista nelkul): elobb megszamol, aztan masol
+    int[] t = { 4, -2, 7, 7, 1 };
+    int db = 0;
+    for (int i = 0; i < t.Length; i++)
+        if (t[i] > 3)
+            db++;
+    int[] nagyok = new int[db];
+    int k = 0;
+    for (int i = 0; i < t.Length; i++)
+    {
+        if (t[i] > 3)
+        {
+            nagyok[k] = t[i];
+            k++;
+        }
+    }
+    for (int i = 0; i < nagyok.Length; i++)
+        Console.Write(nagyok[i] + " ");

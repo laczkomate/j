@@ -1,32 +1,50 @@
-RENDEZES                                                 (pszeudokod, nem C#)
+RENDEZES                                                            [ZH1+2]
 =============================================================================
-BEEPITETT (csak ZH2, lista):          lista.Sort();     lista.Reverse();
-   - lambda nelkul. Szamokra / szovegre (abc) novekvo.
-   - csokkeno sorrend: Sort() utan Reverse()
-   - objektum-lista mezo szerinti rendezese beepitettel nem cel (lambda
-     kellene): ott kezi rendezes vagy mas megoldas
-   - ZH1-ben beepitett rendezes (Array.Sort is) nem szamit biztonsagosnak
+Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
 
-KEZI RENDEZES (novekvo), ket egyszeru valtozat:
+BEEPITETT (ZH2: List<string>, List<int>)
+    List<string> nevek = new List<string>();
+    nevek.Sort();                // novekvo (abc)
+    nevek.Reverse();             // megforditja: Sort utan csokkeno
+  Objektum-listan a Sort() lambda nelkul NEM megy: kezzel rendezz (lent).
 
-   1) MINIMUM-KIVALASZTASOS
-      ciklus i = 0 .. n-2:
-         m = i
-         ciklus j = i+1 .. n-1:   ha (elem[j] < elem[m])  m = j
-         ha (m != i)  csere(elem[i], elem[m])
+KEZI RENDEZES TOMBON (ZH1): novekvo
+    int[] t = { 4, -2, 7, 7, 1 };
+    for (int i = 0; i < t.Length - 1; i++)
+    {
+        for (int j = i + 1; j < t.Length; j++)
+        {
+            if (t[i] > t[j])             // csokkenohoz: <
+            {
+                int csere = t[i];
+                t[i] = t[j];
+                t[j] = csere;
+            }
+        }
+    }
 
-   2) EGYSZERU CSERES
-      ciklus i = 0 .. n-2:
-         ciklus j = i+1 .. n-1:  ha (elem[i] > elem[j]) csere(elem[i],elem[j])
+OBJEKTUM-LISTA MEZO SZERINT (ZH2): ar szerint novekvo
+    List<Termek> lista = new List<Termek>();
+    for (int i = 0; i < lista.Count - 1; i++)
+    {
+        for (int j = i + 1; j < lista.Count; j++)
+        {
+            if (lista[i].ar > lista[j].ar)
+            {
+                Termek csere = lista[i];      // a teljes objektumot csereld
+                lista[i] = lista[j];
+                lista[j] = csere;
+            }
+        }
+    }
 
-   CSERE (segedvaltozoval):   seged = a;   a = b;   b = seged
-   CSOKKENO: az osszehasonlitas iranya fordul (< helyett >)
-   OBJEKTUM-TOMB: az osszehasonlitas a mezon (elem[j].ar < elem[m].ar);
-      a csere a teljes objektumokat cserelje (nem csak a mezot)
-   MASODIK TOMB MEGORZESE: ha kell az eredeti sorrend is, rendezes elott
-      masold le a tombot (j tomb: valodi masolat)
-
-Kerdezd meg magad:
-  - a kulso ciklus hatara n-2 vagy n-1? (az utolso elem a helyen marad)
-  - egyforma elemek: stabilitas szamit-e? (a feladat altalaban nem keri)
-  - melyik tipusra rendezek: szam, szoveg, datum?
+STRING SZERINT (abc): CompareTo
+    List<Termek> lista = new List<Termek>();
+    for (int i = 0; i < lista.Count - 1; i++)
+        for (int j = i + 1; j < lista.Count; j++)
+            if (lista[i].nev.CompareTo(lista[j].nev) > 0)
+            {
+                Termek csere = lista[i];
+                lista[i] = lista[j];
+                lista[j] = csere;
+            }

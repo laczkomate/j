@@ -1,36 +1,79 @@
-MAXIMUM / MINIMUM KIVALASZTAS  (ertek + index)           (pszeudokod, nem C#)
+MAXIMUM / MINIMUM KIVALASZTAS (ertek + index)                       [ZH1+2]
 =============================================================================
-ALAP (nem ures sorozat, nincs szuro):
-   max = elem[0];  idx = 0
-   ciklus i = 1 .. n-1:  ha (elem[i] > max) { max = elem[i];  idx = i }
-   - ELSO elofordulas: szigoru > (nem >=);  utolso elofordulas: >=
-   - MINIMUM: a relacios jel fordul (<)
-   - ures tomb / lista eseten NINCS elem[0]: elobb n > 0 vizsgalat
+Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
 
-FELTETELES (csak bizonyos elemek kozul):
-   van = hamis
-   ciklus i = 0 .. n-1:
-      ha (feltetel(elem[i]))
-         ha (NEM van VAGY elem[i] > max) { max = elem[i]; idx = i; van=igaz }
-   ha (NEM van)  "nincs ilyen elem"       <- a nincs-talalat eset!
-   - NE kezdj 0-val / -1-gyel, hacsak a tartomany ezt nem engedi
-     (negativ ertekeknel rossz); a van-jelzo biztonsagosabb
+ALAP (nem ures tomb)
+    int[] t = { 4, -2, 7, 7, 1 };
+    int max = t[0];
+    int maxIdx = 0;
+    for (int i = 1; i < t.Length; i++)
+    {
+        if (t[i] > max)            // > : ELSO elofordulas, >= : UTOLSO
+        {
+            max = t[i];
+            maxIdx = i;
+        }
+    }
+    Console.WriteLine($"Max: {max}, index: {maxIdx}");
+  Minimumhoz: < a > helyett.
 
-OBJEKTUM-LISTA: az osszehasonlitas a mezon:  lista[i].ar > lista[idx].ar
-   (az indexet tarold el, mert kell a tobbi mezo is: nev, kategoria ...)
-CSOPORTONKENT: a van, max, idx minden csoportnal ujra indul (j csoport)
-KET CSOPORT SZELSOERTEKENEK OSSZEHASONLITASA:
-   max1 az 1. csoportbol, max2 a 2. csoportbol (kulon valtozok, kulon szuro),
-   UTANA hasonlitsd ossze max1-et es max2-t; kiir melyik nagyobb es az adatok
-LEGKISEBB PAROS (es hasonlo feltetel + szelsoertek): felteteles minimum, plusz
-   a "van-e egyaltalan paros" eset ("nincs paros szam" uzenet)
-KULONBSEG max - min csoportonkent: ket szelsoertek kiszamitasa, aztan kivonas.
-   (egy ciklusban mindket szelsoertek mehet)
+FELTETELES (pl. legkisebb paros) + "nincs ilyen" eset
+    int[] t = { 4, -2, 7, 7, 1 };
+    bool van = false;
+    int min = 0;
+    int minIdx = -1;
+    for (int i = 0; i < t.Length; i++)
+    {
+        if (t[i] % 2 == 0)
+        {
+            if (!van || t[i] < min)
+            {
+                min = t[i];
+                minIdx = i;
+                van = true;
+            }
+        }
+    }
+    if (van)
+        Console.WriteLine($"Legkisebb paros: {min} (index: {minIdx})");
+    else
+        Console.WriteLine("Nincs paros szam.");
 
-Kerdezd meg magad:
-  - mi a kezdoertek? (elso elem / van-jelzo)  - mi van, ha egy elem sem jo?
-  - ket egyforma szelsoertek: melyiket kell? (elso -> szigoru osszehasonlitas)
-  - ertek vagy index vagy a teljes objektum kell a kiirashoz?
-  - az osszehasonlitas iranya (>, <) a feladat szerint?
-Forras: 06_Tomb_Lista 13. dia (minimum, ures tomb eset);
-        Feladatgyujtemeny 5.2 g) i);  ZH1 2023/24 3e;  ZH2 4., 8. feladat.
+MAX ES MIN EGY CIKLUSBAN, KULONBSEG
+    int[] t = { 4, -2, 7, 7, 1 };
+    int mx = t[0];
+    int mn = t[0];
+    for (int i = 1; i < t.Length; i++)
+    {
+        if (t[i] > mx) mx = t[i];
+        if (t[i] < mn) mn = t[i];
+    }
+    Console.WriteLine($"Terjedelem: {mx - mn}");
+
+LISTA + OBJEKTUM (ZH2): legdragabb egy kategoriaban, indexszel
+    static int LegdragabbIdx(List<Termek> lista, string kategoria)
+    {
+        int idx = -1;
+        for (int i = 0; i < lista.Count; i++)
+        {
+            if (lista[i].kategoria == kategoria)
+            {
+                if (idx == -1 || lista[i].ar > lista[idx].ar)
+                    idx = i;
+            }
+        }
+        return idx;                 // -1: nincs ilyen kategoria
+    }
+
+HASZNALAT + KET CSOPORT SZELSOERTEKENEK OSSZEHASONLITASA
+    List<Termek> lista = new List<Termek>();
+    int a = LegdragabbIdx(lista, "tejtermek");
+    int b = LegdragabbIdx(lista, "pekaru");
+    if (a == -1 || b == -1)
+        Console.WriteLine("Valamelyik kategoria ures.");
+    else if (lista[a].ar > lista[b].ar)
+        Console.WriteLine($"Dragabb: {lista[a].nev} ({lista[a].ar} Ft)");
+    else if (lista[a].ar < lista[b].ar)
+        Console.WriteLine($"Dragabb: {lista[b].nev} ({lista[b].ar} Ft)");
+    else
+        Console.WriteLine("Egyforma a legmagasabb ar.");

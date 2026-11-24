@@ -1,46 +1,67 @@
-CSOPORTONKENTI FELDOLGOZAS                               (pszeudokod, nem C#)
+CSOPORTONKENTI FELDOLGOZAS                                          [ZH1+2]
 =============================================================================
-Felismeres: "...-nkent", "kategoriankent", "varosonkent", "gyartonkent",
-            "emeletenkent", "AI-muveszenkent"
+Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
 
-(A) EGYDIMENZIOS TOMB, SORFOLYTONOS ADAT  (ZH1)    csoportok x meret
-    elem(cs, j) = t[cs * meret + j]     cs: 0..csoportok-1     j: 0..meret-1
-    a tomb hossza = csoportok * meret     (a csoportok szamat a user adja)
-    Globalis statisztika: EGY ciklus az egesz tombon (0 .. Length-1)
-    Csoportonkent:
-      ciklus cs = 0 .. csoportok-1:
-         s = 0;  db = 0;  van = hamis; ...   <- INICIALIZALAS ITT, a cs-ciklus
-                                                ELEJEN (nem a ciklus elott!)
-         ciklus j = 0 .. meret-1:
-            x = t[cs * meret + j]
-            ... a tetel (osszegzes / max / mind-e / megszamolas) ...
-         csoport eredmenye: kiir (Varos1, Varos2: cs + 1) VAGY gyujt tovabb
-    "Melyik csoport a legkisebb atlagu?":  csoportonkent atlag, majd a
-         max/min tetel a CSOPORTATLAGOKON (kulon min valtozo + csoport index)
-    "Hany csoport / van-e olyan csoport, ahol minden ...":
-         csoportonkent mind = igaz; ha (NEM feltetel) mind = hamis;
-         a csoport vegen: ha (mind) { db = db + 1 } / van = igaz
-    Visszafejtes az i. indexrol:   csoport = i / meret,  belul = i % meret
-    Veletlen elem egy csoportbol: j = rnd.Next(meret); elem = t[cs*meret + j]
+TOMB, SORFOLYTONOS (ZH1): CSOP csoport, mindegyikben MERET elem
+  index = cs * MERET + j    (cs: csoport 0-tol, j: elem a csoporton belul)
+    const int CSOP = 3;
+    const int MERET = 4;
+    Random rnd = new Random();
+    int[] t = new int[CSOP * MERET];
+    for (int i = 0; i < t.Length; i++)
+        t[i] = rnd.Next(1, 101);              // 1..100
+    int legjobbCs = 0;
+    int legjobbOssz = 0;
+    for (int cs = 0; cs < CSOP; cs++)
+    {
+        int ossz = 0;                         // csoportonkent nullazva!
+        int max = t[cs * MERET];
+        for (int j = 0; j < MERET; j++)
+        {
+            int ertek = t[cs * MERET + j];
+            Console.Write($"{ertek,4}");
+            ossz += ertek;
+            if (ertek > max)
+                max = ertek;
+        }
+        double atlag = (double)ossz / MERET;
+        Console.WriteLine($" | ossz: {ossz}, atlag: {atlag:F2}, max: {max}");
+        if (cs == 0 || ossz > legjobbOssz)
+        {
+            legjobbOssz = ossz;
+            legjobbCs = cs;
+        }
+    }
+    Console.WriteLine($"Legnagyobb osszeg: {legjobbCs + 1}. csoport");
 
-(B) OBJEKTUM-LISTA, KATEGORIAK SZERINT  (ZH2)
-    1) kategoriak = egyedi ertekek kigyujtese             (j egyedi)
-    2) ciklus k a kategoriakon:
-         van = hamis                                    <- kategoriankent ujra
-         ciklus i a teljes listan:
-            ha (lista[i].kategoria == kategoriak[k]  ES  szuro(lista[i]))
-                ... felteteles max / min / megszamolas (j maximum)
-         kiiras kategoriankent, a minta szerint
-    3) "ha nincs legalabb 3 db, jeloles (!!!)": db szamlalo kategoriankent,
-       kiiras utan ha (db < 3) a jel hozzaadasa
+VELETLEN MODOSITAS EGY CSOPORTBAN (extra)
+    const int MERET = 4;
+    Random rnd = new Random();
+    int[] t = new int[3 * MERET];
+    int cs2 = rnd.Next(3);                    // veletlen csoport
+    int j2 = rnd.Next(MERET);                 // veletlen elem benne
+    t[cs2 * MERET + j2] = 0;
 
-(C) KET CSOPORT SZELSOERTEKENEK OSSZEHASONLITASA
-    max1 es max2 KULON valtozokban (kulon szuro), UTANA az ertekek osszevetese
-
-Kerdezd meg magad:
-  - minden valtozo a megfelelo helyen nullazodik? (csoportonkent!)
-  - a csoport hatara jo? (cs*meret .. cs*meret + meret - 1)
-  - lehet-e ures csoport (nincs szuro-talalat)? mit ir ki ilyenkor?
-  - a csoport sorszama 0-tol vagy 1-tol jelenik meg a kiirasban?
-Forras: Feladatgyujtemeny 5.9 - 5.11 (egydimenzios, ket dimenzios problema);
-        ZH1 2024/25 3e, 2025/26 3f, 2023/24 3e;  ZH2 8. feladat.
+LISTA (ZH2): kategoriankent a legolcsobb termek
+    static void LegolcsobbKategoriankent(List<Termek> lista)
+    {
+        List<string> kat = new List<string>();     // egyedi kategoriak
+        foreach (Termek x in lista)
+        {
+            bool marVan = false;
+            foreach (string k in kat)
+                if (k == x.kategoria)
+                    marVan = true;
+            if (!marVan)
+                kat.Add(x.kategoria);
+        }
+        foreach (string k in kat)                  // csoportonkent minimum
+        {
+            int idx = -1;
+            for (int i = 0; i < lista.Count; i++)
+                if (lista[i].kategoria == k)
+                    if (idx == -1 || lista[i].ar < lista[idx].ar)
+                        idx = i;
+            Console.WriteLine($"{k}: {lista[idx].nev} ({lista[idx].ar} Ft)");
+        }
+    }

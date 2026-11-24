@@ -1,35 +1,72 @@
-OSSZEGZES / SZORZAT / MEGSZAMOLAS / ATLAG             (pszeudokod, nem C#)
+OSSZEGZES, MEGSZAMOLAS, ATLAG, SZAZALEK                             [ZH1+2]
 =============================================================================
-Felismeres: "osszesen", "osszege", "hany db", "atlag", "feltetelnek megfelelo"
-Bemenet: elemek sorozata (tomb: Length, lista: Count)   Kimenet: egy szam
+Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
 
-OSSZEGZES
-   s = 0                          <- nullazas a ciklus ELOTT (szorzatnal: 1)
-   ciklus minden elemre:  s = s + elem
-   kiir s
-FELTETELES OSSZEGZES
-   ciklus minden elemre:  ha (feltetel(elem))  s = s + elem
-MEGSZAMOLAS
-   db = 0
-   ciklus minden elemre:  ha (feltetel(elem))  db = db + 1
-ATLAG  (felteteles is)
-   s = 0;  db = 0
-   ciklus minden elemre:  ha (feltetel(elem)) { s = s + elem;  db = db + 1 }
-   ha (db > 0)  atlag = s / db        egyebkent: "nincs ilyen elem"
-   - az s es db UGYANAZZAL a feltetellel gyulik
-   - egesz osszegnel az osztas elott legyen valos: (double) s / db
-   - db == 0 esetben NE oszts: kulon ag (vagy a feladat megengedi, hogy van)
-KEPLETES OSSZEG (pl. minden elemre f(elem) kepletet kell szamolni)
-   ciklus minden elemre:  ha (feltetel)  s = s + f(elem)
-   - nagy ertekeknel long / double (Math.Pow(...) double-t ad)
-CSOPORTONKENT
-   az s, db nullazasa MINDEN csoport ciklusanak ELEJEN (j csoport)
-OBJEKTUM-LISTA: elem helyett lista[i].mezo (pl. lista[i].ar)
+TOMB (ZH1): osszeg, darab feltetellel, atlag, szazalek
+    int[] t = { 4, -2, 7, 7, 1 };
+    int ossz = 0;
+    int db = 0;
+    for (int i = 0; i < t.Length; i++)
+    {
+        ossz += t[i];                         // osszegzes
+        if (t[i] > 3)                         // megszamolas
+            db++;
+    }
+    double atlag = (double)ossz / t.Length;   // (double) nelkul csonkol!
+    double szazalek = 100.0 * db / t.Length;
+    Console.WriteLine($"Osszeg: {ossz}, atlag: {atlag:F2}");
+    Console.WriteLine($"3-nal nagyobb: {db} db ({szazalek:F1}%)");
 
-Kerdezd meg magad:
-  - milyen tipusu az s? (int tulcsordulhat? double kell?)
-  - a feltetel zart vagy nyilt hatar? (< vagy <=, "fololt" = >)
-  - mi a kimenet, ha db == 0?
-  - kell-e kerekites / formazas kiirasnal? (j kiir, j math)
-Forras: 06_Tomb_Lista 9., 12. dia (osszeg, atlag; int csonkolas);
-        Feladatgyujtemeny 5.1, 5.2 e) f);  ZH1 2024/25 3c, 2025/26 3d.
+FELTETELES ATLAG (ugyanaz a feltetel az osszegnel es a darabnal)
+    int[] t = { 4, -2, 7, 7, 1 };
+    int ossz = 0;
+    int db = 0;
+    for (int i = 0; i < t.Length; i++)
+    {
+        if (t[i] > 0)
+        {
+            ossz += t[i];
+            db++;
+        }
+    }
+    if (db > 0)
+        Console.WriteLine($"Pozitivak atlaga: {(double)ossz / db:F2}");
+    else
+        Console.WriteLine("Nincs pozitiv elem.");
+
+LISTA + OBJEKTUM (ZH2): kategoria atlagara, fuggvenykent
+    static double AtlagAr(List<Termek> lista, string kategoria)
+    {
+        int ossz = 0;
+        int db = 0;
+        foreach (Termek x in lista)
+        {
+            if (x.kategoria == kategoria)
+            {
+                ossz += x.ar;
+                db++;
+            }
+        }
+        if (db == 0)
+            return 0;                     // nincs talalat: ne osszon 0-val
+        return (double)ossz / db;
+    }
+
+IDOSZAKRA SZURT ATLAG (datum ket hatar kozott)
+    List<Termek> lista = new List<Termek>();
+    DateTime tol = new DateTime(2024, 1, 1);
+    DateTime ig = new DateTime(2024, 6, 30);
+    int ossz = 0;
+    int db = 0;
+    foreach (Termek x in lista)
+    {
+        if (x.datum >= tol && x.datum <= ig)
+        {
+            ossz += x.ar;
+            db++;
+        }
+    }
+    if (db > 0)
+        Console.WriteLine($"Atlagar: {(double)ossz / db:F2} Ft");
+    else
+        Console.WriteLine("Nincs adat az idoszakban.");

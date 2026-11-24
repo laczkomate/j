@@ -1,4 +1,4 @@
-PROGRAMOZASI TETELEK - FELISMERO TABLA            (a kartyak PSZEUDOKODOK)
+PROGRAMOZASI TETELEK - FELISMERO TABLA                 (a kartyak: C# minta)
 =============================================================================
 Feladatszoveg kulcsszava                         -> tetel           kartya
 -----------------------------------------------------------------------------
@@ -36,7 +36,3 @@ OSSZETETT FELADAT = TETELEK KOMBINACIOJA
   "van-e olyan csoport, ahol minden ..."
                            = csoportonkent mind-e, majd eldontes a csoportokon
   "hany csoport ..."       = csoportonkent feltetel + megszamolas
-
-MINDEN FELADATHOZ (j gyakorlas): 4 kerdes - bemenet, adatszerkezet, tetelek,
-kimenet.
-MINDEN TETELNEL probald ki: ures | egy elem | nincs talalat | hatarertek.

@@ -1,34 +1,61 @@
-SZELEKCIOS ARKALKULACIO                                  (pszeudokod, nem C#)
+ARKALKULACIO SZELEKCIOVAL (savok, kedvezmeny, kerekites)          [ZH1+2]
 =============================================================================
-Felismeres: ZH1 1. feladat: "szamitsa ki a vegosszeget", tablazat, savok,
-            kedvezmeny, "megkezdett", igen/nem kerdesek
+ELLENORZOTT BEKERES (do-while + TryParse, intervallum)
+    int db;
+    bool jo;
+    do
+    {
+        Console.Write("Darabszam (1-50): ");
+        jo = int.TryParse(Console.ReadLine(), out db) && db >= 1 && db <= 50;
+        if (!jo)
+            Console.WriteLine("Hibas ertek, add meg ujra!");
+    } while (!jo);
 
-LEPESEK
- 1) Rajzold fel a DONTESI FAT: melyik kerdes mit nyit meg? (igen/nem agak)
- 2) Minden penzugyi tetel kulon valtozo, 0-rol indul (menu, hal, kenyer...)
- 3) A tablazatbol az egysegar: if / else if (savok, intervallum) vagy
-    switch (diszkret ertek: "levessel", "fogas", 2/3/5 dl)    (j if, switch)
- 4) Mennyiseg * egysegar; "megkezdett egyseg": felfele kerekitett darab
-    (Math.Ceiling tort osztassal, vagy (m + e - 1) / e egeszekkel; j math)
- 5) Szazalekos modositas: ar * (100 - szazalek) / 100.0  (j math)
- 6) Kerekites: Math.Round - bankari! .5 eset ellenorizd (j math)
- 7) Ellenorzott bekeres, ahol a feladat keri: do-while + TryParse (j beker):
-      intervallum, oszthatosag (x % 50 != 0 -> ujra), megengedett ertekek
- 8) Random adat, ha kell (j random): egesz / valos, hatarok, tizedes
- 9) Vegosszeg = a tetelek osszege; kiiras a minta szerint (j kiir)
- 10) Extra: veletlen modositas (pl. +-10%): valos szorzo [0,9 ; 1,1]
+MEGENGEDETT SZOVEGES ERTEKEK
+    string meret;
+    do
+    {
+        Console.Write("Meret (kicsi/kozepes/nagy): ");
+        meret = Console.ReadLine().Trim().ToLower();
+    } while (meret != "kicsi" && meret != "kozepes" && meret != "nagy");
 
-STRING VALASZOK: Trim + ToLower, utana ==  (a feladat gyakran kimondja, hogy
-   "helyesen irja be"; ekkor nem kell ellenorizni, de a kis/nagybetut igen)
-EGYMASBA AGYAZOTT DONTES: kulso: tipus (napi menu / sult hal),
-   belso: reszletek (levessel / leves nelkul; halfajta)
-SAVOK ELLENORZESE: hataron (pl. 100, 600) mindket oldalon probald ki!
+SAVOK if / else if (a hatarokat nezd: < vagy <=)
+    double kg = 12.5;
+    double egysegar;
+    if (kg < 5)
+        egysegar = 800;
+    else if (kg < 20)
+        egysegar = 700;
+    else
+        egysegar = 600;
+    double ar = kg * egysegar;
 
-Kerdezd meg magad:
-  - van-e olyan ag, ahol "nem kerdeztem" (pl. sult hal -> nincs leves)?
-  - a "megkezdett" egyseg: 10 dkg = 100 g -> 235 g mennyi egyseg?
-  - a szazalek a teljes osszegre vagy egy tetelre vonatkozik?
-  - egesz osztas vs valos osztas az arszamitasban?
-Forras: 04_Szelekcio dia-sor (if, else if, switch);
-        Feladatgyujtemeny 2. fejezet (2.5 - 2.8);
-        ZH1 2023/24 1, 2024/25 1, 2025/26 1.
+TABLAZAT switch-csel (szoveg)
+    string meret = "kozepes";
+    int alap;
+    switch (meret)
+    {
+        case "kicsi": alap = 1200; break;
+        case "kozepes": alap = 1600; break;
+        case "nagy": alap = 2100; break;
+        default: alap = 0; break;
+    }
+
+MEGKEZDETT EGYSEG, KEDVEZMENY, KEREKITES
+    int perc = 130;
+    int orak = (int)Math.Ceiling(perc / 60.0);       // 3 (60.0! nem 60)
+    double ar = orak * 1500.0;
+    bool torzsvendeg = true;
+    if (torzsvendeg)
+        ar = ar * 0.9;                                // -10%
+    if (orak >= 3)
+        ar = ar * 0.95;                               // utana meg -5%
+    double kerek5 = Math.Round(ar / 5) * 5;           // 5 Ft-ra
+    double egesz = Math.Round(ar, MidpointRounding.AwayFromZero);
+    Console.WriteLine($"Fizetendo: {egesz} Ft");
+
+RANDOM GENERALT ADAT
+    Random rnd = new Random();
+    int napok = rnd.Next(1, 8);                       // 1..7
+    double suly = rnd.Next(10, 501) / 10.0;           // 1.0..50.0, 1 tizedes
+    double ar2 = rnd.Next(100, 10001) / 100.0;        // 2 tizedes

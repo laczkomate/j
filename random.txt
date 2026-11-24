@@ -34,4 +34,3 @@ RANDOM                                                              [ZH1+2]
   Seed: new Random(30) -> mindig ugyanaz a sorozat (teszteleshez jo).
   Seed nelkul a gep ora hatarozza meg; ket peldany egymas utan azonos
   sorozatot adhat -> ezert csak 1 peldany.
-  Kerdezd meg: zart vagy nyilt a felso hatar? egesz vagy valos? hany tizedes?

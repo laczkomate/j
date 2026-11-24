@@ -2,16 +2,30 @@ CSV BEOLVASAS  (StreamReader)                                       [ZH2]
 =============================================================================
   using System.IO;   (datumhoz: using System.Globalization;)
 
-  A beolvasas LEPESEI (a ciklust es az osszeallitast te ird meg):
-  1) osztaly a CSV sor mezoire (a bool mezot a szovegbol szamold: == "I")
-  2) List<osztaly> a peldanyoknak                  (j lista, j osztaly)
-  3) StreamReader megnyitasa
-  4) A FEJLEC eldobasa: egyetlen ReadLine() az elejen
-  5) ciklus: amig nincs vege a fajlnak
-  6) sor szetvagasa Split(';')
-  7) mezonkent konvertalas: int.Parse, DateTime.ParseExact, == osszehasonl.
-  8) uj objektum a mezokbol, hozzaadas a listahoz
-  9) fajl lezarasa
+  TELJES BEOLVASAS (fejleces CSV, ; elvalaszto)
+  Termek: nev, kategoria (string); ar (int); akcios (bool); datum (DateTime)
+  Sor a fajlban:  Kifli;pekaru;45;igen;2024.12.17
+    static List<Termek> Beolvas(string fajlnev)
+    {
+        List<Termek> lista = new List<Termek>();
+        StreamReader sr = new StreamReader(fajlnev);
+        sr.ReadLine();                              // fejlec eldobasa
+        while (!sr.EndOfStream)
+        {
+            string[] t = sr.ReadLine().Split(';');
+            Termek x = new Termek();
+            x.nev = t[0];
+            x.kategoria = t[1];
+            x.ar = int.Parse(t[2]);
+            x.akcios = t[3] == "igen";
+            x.datum = DateTime.ParseExact(t[4], "yyyy.MM.dd",
+                                          CultureInfo.InvariantCulture);
+            lista.Add(x);
+        }
+        sr.Close();
+        return lista;
+    }
+  Main-ben:   List<Termek> lista = Beolvas("termekek.csv");
 
   Szintaktikai reszletek:
     StreamReader sr = new StreamReader("adatok.csv");
@@ -33,13 +47,13 @@ CSV BEOLVASAS  (StreamReader)                                       [ZH2]
     DateTime datum = DateTime.ParseExact(t[3], "yyyy.MM.dd",
                                          CultureInfo.InvariantCulture);
     string[] tagek = "zeller,gomba".Split(',');  // mezon belul is lehet lista
-  Datum + ido ("2024.11.25 11:30"): "yyyy.MM.dd HH:mm" (HH!, j datetime)
+  Datum + ido ("2024.11.25 11:30"): "yyyy.MM.dd HH:mm" (HH = 24 oras!)
   Valos mezo ponttal (3.5): double.Parse(s, CultureInfo.InvariantCulture)
 
   ELERESI UT: a relativ nev a FUTTATO mappahoz kepest ertendo (bin\Debug\...).
   - a fajlra: Properties -> Copy to Output Directory: "Copy if newer", VAGY
   - teljes ut: @"C:\temp\NEPTUN\adatok.csv"
-  Ha FileNotFoundException: nincs ott a fajl, ahol keresi (j hibauzenet).
+  Ha FileNotFoundException: nincs ott a fajl, ahol keresi.
   Kodolas: UTF-8 az alap; a BOM-ot a StreamReader maga kezeli.
   Ures sor a fajl vegen: Split utan t.Length == 1 -> IndexOutOfRange; ezt
   kezeld, ha a futas ilyenkor elszall.
